@@ -1112,7 +1112,7 @@ void Ragebot::Run()
 
 		csgo->should_stop_slide = false;
 
-		static int dt_shot_tick = 20;
+		static int dt_shot_tick = 15;
 		auto wpn_info = weapon->GetCSWpnData();
 		if (csgo->local->GetFlags() & FL_ONGROUND && !vars.antiaim.slowwalk->active) {
 			/*auto get_standing_accuracy = [&]() -> const float
