@@ -868,7 +868,7 @@ bool CockRevolver()
 	*/
 
 	float curtime = (csgo->local->GetTickBase());
-	static float next_shoot_time = 0.f;
+	static float next_shoot_time = 0.2421875;
 
 	bool ret = false;
 
@@ -1130,7 +1130,7 @@ void Ragebot::Run()
 
 		csgo->should_stop_slide = false;
 
-		static int dt_shot_tick = 2;
+		static int dt_shot_tick = 1;
 		auto wpn_info = weapon->GetCSWpnData();
 		if (csgo->local->GetFlags() & FL_ONGROUND && !vars.antiaim.slowwalk->active) {
 			auto get_standing_accuracy = [&]() -> const float

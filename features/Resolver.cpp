@@ -54,26 +54,41 @@ void CResolver::DetectSide(IBasePlayer* player, int* side)
 	Vector src3D, dst3D, forward, right, up, src, dst;
 	float back_two, right_two, left_two;
 	trace_t tr;
-	Ray_t ray, ray2, ray3, ray4, ray5;
+	Ray_t ray, ray2, ray3, ray4, ray5, ray6, ray7;
 	CTraceFilter filter;
 
 	Math::AngleVectors(Vector(0, GetBackwardYaw(player), 0), &forward, &right, &up);
 
 	filter.pSkip = player;
 	src3D = player->GetEyePosition();
-	dst3D = src3D + (forward * 680); //Might want to experiment with other numbers, incase you don't know what the number does, its how far the trace will go. Lower = shorter.
-
+	dst3D = src3D + (forward, right, up* 980); //Might want to experiment with other numbers, incase you don't know what the number does, its how far the trace will go. Lower = shorter.
 	ray.Init(src3D, dst3D);
 	interfaces.trace->TraceRay(ray, MASK_SHOT, &filter, &tr);
 	back_two = (tr.endpos - tr.startpos).Length();
 
-	ray2.Init(src3D + right * 35, dst3D + right * 35);
+	ray2.Init(src3D + right * 30, dst3D + right * 30);
 	interfaces.trace->TraceRay(ray2, MASK_SHOT, &filter, &tr);
 	right_two = (tr.endpos - tr.startpos).Length();
 
-	ray3.Init(src3D - right * 36, dst3D - right * 36);
+	ray3.Init(src3D - right * 70, dst3D - right * 70);
 	interfaces.trace->TraceRay(ray3, MASK_SHOT, &filter, &tr);
 	left_two = (tr.endpos - tr.startpos).Length();
+
+	ray4.Init(src3D - right * 90, dst3D - right * 90);
+	interfaces.trace->TraceRay(ray3, MASK_SHOT, &filter, &tr);
+	right_two = (tr.endpos - tr.startpos).Length();
+
+	ray5.Init(src3D - right * 30, dst3D - right * 30);
+	interfaces.trace->TraceRay(ray3, MASK_SHOT, &filter, &tr);
+	right_two = (tr.endpos - tr.startpos).Length();
+
+	ray6.Init(src3D - right * 30, dst3D - right * 30);
+	interfaces.trace->TraceRay(ray3, MASK_SHOT, &filter, &tr);
+	left_two = (tr.endpos - tr.startpos).Length();
+
+	ray7.Init(src3D + right * 90, dst3D + right * 90);
+	interfaces.trace->TraceRay(ray, MASK_SHOT, &filter, &tr);
+	back_two = (tr.endpos - tr.startpos).Length();
 
 	if (left_two > right_two) {
 		*side = -1;
