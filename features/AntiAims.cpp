@@ -44,7 +44,7 @@ void CMAntiAim::Fakelag(bool& send_packet)
 
 	if ((csgo->cmd->buttons & IN_ATTACK) && !vars.antiaim.fakelag_onshot) {
 		send_packet = true;
-		csgo->max_fakelag_choke = exp ? 1 : 2;
+		csgo->max_fakelag_choke = exp ? 2 : 10;
 		return;
 	}
 
@@ -130,11 +130,6 @@ void CMAntiAim::Fakelag(bool& send_packet)
 
 void CMAntiAim::Freestanding()
 {
-
-	if (!vars.antiaim.freestanding) {
-		Freestanding();
-	}
-
 	if (!csgo->local->isAlive())
 		return;
 
@@ -299,7 +294,7 @@ void CMAntiAim::Yaw(bool& send_packet)
 	static float s_add = 0.f;
 	static bool b_switch = false;
 	int side = csgo->SwitchAA ? 1 : -1;
-	if (csgo->desync_angle < (float)vars.antiaim.desync_amount / 10.f)
+	if (csgo->desync_angle < (float)vars.antiaim.desync_amount / 100.f)
 		side *= 1.f;
 	else if (vars.antiaim.slowwalk->active) {
 		if (csgo->desync_angle < 58.f) {
@@ -400,6 +395,11 @@ void CMAntiAim::Yaw(bool& send_packet)
 
 void CMAntiAim::Run(bool& send_packet)
 {
+
+	if (!vars.antiaim.freestanding) {
+		Freestanding();
+	}
+
 	if (vars.antiaim.slowwalk->active || csgo->should_stop_slide)
 	{
 		const auto weapon = csgo->weapon;

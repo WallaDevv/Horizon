@@ -75,6 +75,11 @@ void DoClantag()
 				case 7: SetClanTag(hs::clantag8::s().c_str(), hs::weave_su::s().c_str()); break;
 				case 8: SetClanTag(hs::clantag9::s().c_str(), hs::weave_su::s().c_str()); break;
 				case 9: SetClanTag(hs::clantag10::s().c_str(), hs::weave_su::s().c_str()); break;
+				case 10: SetClanTag(hs::clantag11::s().c_str(), hs::weave_su::s().c_str()); break;
+				case 11: SetClanTag(hs::clantag12::s().c_str(), hs::weave_su::s().c_str()); break;
+				case 12: SetClanTag(hs::clantag13::s().c_str(), hs::weave_su::s().c_str()); break;
+				case 13: SetClanTag(hs::clantag14::s().c_str(), hs::weave_su::s().c_str()); break;
+				case 14: SetClanTag(hs::clantag15::s().c_str(), hs::weave_su::s().c_str()); break;
 				}
 			}
 			iLastTime = int(interfaces.global_vars->curtime * 2 + latency);

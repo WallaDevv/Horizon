@@ -392,7 +392,7 @@ Vector Ragebot::FullScan(animation* anims, int& hitbox, float& simtime, float& b
 			return best_point;
 			
 		}
-		if (best_damage > 0 && CurrentSettings().adaptive_baim) {
+		if (best_damage > 0.2f && CurrentSettings().adaptive_baim) {
 			if (CanDT() && csgo->dt_charged, TIME_TO_TICKS(0.2f)) {
 				if (best_damage * 2.f > health) {
 					target_lethal = true;
@@ -1130,7 +1130,7 @@ void Ragebot::Run()
 
 		csgo->should_stop_slide = false;
 
-		static int dt_shot_tick = 24;
+		static int dt_shot_tick = 2;
 		auto wpn_info = weapon->GetCSWpnData();
 		if (csgo->local->GetFlags() & FL_ONGROUND && !vars.antiaim.slowwalk->active) {
 			auto get_standing_accuracy = [&]() -> const float

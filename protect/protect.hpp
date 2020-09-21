@@ -95,6 +95,7 @@ namespace hs {
 	_(clantag12, " Hor     ");
 	_(clantag13, " Ho      ");
 	_(clantag14, " H       ");
+	_(clantag15, "         ");
 
 	// netvar tables
 	_(DT_BaseEntity, "DT_BaseEntity"); // DT_BaseEntity
