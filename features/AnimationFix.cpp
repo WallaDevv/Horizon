@@ -106,7 +106,7 @@ animation::animation(IBasePlayer* player)
 	obb_maxs = player->GetMaxs();
 	memcpy(layers, player->GetAnimOverlays(), sizeof(CAnimationLayer) * 13);
 	poses = player->m_flPoseParameter();
-	if ((has_anim_state = player->GetPlayerAnimState()))
+	//if ((has_anim_state = player->GetPlayerAnimState()))
 	anim_state = player->GetPlayerAnimState();
 	anim_time = player->GetOldSimulationTime() + interfaces.global_vars->interval_per_tick;
 	sim_time = player->GetSimulationTime();
@@ -136,28 +136,28 @@ animation::animation(IBasePlayer* player, Vector last_reliable_angle) : animatio
 
 void animation::restore(IBasePlayer* player) const
 {
-	player->GetVelocity() = velocity;
+	//player->GetVelocity() = velocity;
 	player->GetFlagsPtr() = flags;
-	player->GetEFlags() = eflags;
+	//player->GetEFlags() = eflags;
 	player->GetDuckAmount() = duck;
 	memcpy(player->GetAnimOverlays(), layers, sizeof(CAnimationLayer) * 13);
-	player->GetLBY() = lby;
+	//player->GetLBY() = lby;
 	player->GetOrigin() = origin;
 	player->SetAbsOrigin(abs_origin);
-	player->m_flPoseParameter() = poses;
+	//player->m_flPoseParameter() = poses;
 }
 
 void animation::apply(IBasePlayer* player) const
 {
-	player->m_flPoseParameter() = poses;
+	//player->m_flPoseParameter() = poses;
 	*player->GetEyeAnglesPointer() = eye_angles;
-	player->GetVelocity() = velocity;
-	player->GetLBY() = lby;
+	//player->GetVelocity() = velocity;
+	//player->GetLBY() = lby;
 	player->GetDuckAmount() = duck;
 	player->GetFlagsPtr() = flags;
 	player->GetOrigin() = origin;
 	player->SetAbsOrigin(abs_origin);
-	if (anim_state) {
+    if (anim_state) {
 		player->SetAnimState(anim_state);
 	}
 }
@@ -241,7 +241,7 @@ void CMAnimationFix::animation_info::update_animations(animation* record, animat
 		const auto time = from->sim_time + TICKS_TO_TIME(i + 1);
 		const auto lerp = 1.f - (record->sim_time - time) / (record->sim_time - from->sim_time);
 
-		/*player->GetDuckAmount() = Interpolate2(from->duck, record->duck, lerp);*/
+		player->GetDuckAmount() = Interpolate2(from->duck, record->duck, lerp);
 
 		// resolve player.
 		if (record->lag - 1 == i)
@@ -421,7 +421,7 @@ void CMAnimationFix::update_player(IBasePlayer* player)
 	if (player->GetAnimOverlay(5)->m_flWeight > 0.0f)
 		player->GetFlagsPtr() |= FL_ONGROUND;
 
-	//player->InvalidatePhysicsRecursive(ANIMATION_CHANGED);
+	player->InvalidatePhysicsRecursive(ANIMATION_CHANGED);
 
 	// make sure we keep track of the original invalidation state
 	const auto old_invalidation = enable_bone_cache_invalidation;
@@ -432,7 +432,7 @@ void CMAnimationFix::update_player(IBasePlayer* player)
 	player->UpdateClientSideAnimation();
 	csgo->EnableBones = player->GetClientSideAnims() = false;
 
-	//player->InvalidatePhysicsRecursive(BOUNDS_CHANGED);
+	player->InvalidatePhysicsRecursive(BOUNDS_CHANGED);
 
 	player->InvalidatePhysicsRecursive(0x2A);
 
@@ -553,15 +553,15 @@ std::optional<animation*> CMAnimationFix::get_latest_firing_animation(IBasePlaye
 }
 void CMAnimationFix::UpdateFakeState()
 {
-	//static bool ShouldInitAnimstate = false;
+     static bool ShouldInitAnimstate = false;
 
 	if ((!interfaces.engine->IsConnected() && !interfaces.engine->IsInGame()) || !csgo->local) {
-		//ShouldInitAnimstate = false;
+		ShouldInitAnimstate = false;
 		return;
 	}
 
-	if (!csgo->local->isAlive() /*|| csgo->game_rules->IsFreezeTime()*/) {
-		//ShouldInitAnimstate = false;
+	if (!csgo->local->isAlive() || csgo->game_rules->IsFreezeTime()) {
+		ShouldInitAnimstate = false;
 		return;
 	}
 
