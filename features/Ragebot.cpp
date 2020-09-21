@@ -618,7 +618,7 @@ bool HitTraces(animation* _animation, const Vector position, const float chance,
 	const auto weapon_inaccuracy = weapon->GetInaccuracy();
 
 	if (id == WEAPON_REVOLVER)
-		return weapon_inaccuracy < (crouched ? .0020f : .0055f);
+		return weapon_inaccuracy < (crouched ? .0028f : .0055f);
 
 	// calculate start and angle.
 	auto start = csgo->local->GetEyePosition();
@@ -1126,7 +1126,7 @@ void Ragebot::Run()
 
 		csgo->should_stop_slide = false;
 
-		static int dt_shot_tick = 30;
+		static int dt_shot_tick = 24;
 		auto wpn_info = weapon->GetCSWpnData();
 		if (csgo->local->GetFlags() & FL_ONGROUND && !vars.antiaim.slowwalk->active) {
 			auto get_standing_accuracy = [&]() -> const float
@@ -1199,7 +1199,6 @@ void Ragebot::Run()
 				ShotSnapshot snapshot;
 				tick_record record;
 				snapshot.entity = best_anims->player;
-				snapshot.resolver = best_anims->player->GetIndex();
 				snapshot.hitbox_where_shot = HitboxToString(hitbox);
 				snapshot.resolver = ResolverMode[best_anims->player->GetIndex()];
 				snapshot.time = interfaces.global_vars->interval_per_tick * csgo->local->GetTickBase();
@@ -1217,10 +1216,9 @@ void Ragebot::Run()
 				shot = true;
 				last_shot_tick = clock();
 				csgo->firedshots[best_anims->player->GetIndex()]++;
-				if (vars.ragebot.double_tap) {
-					DrawCapsule(best_anims);
-				}
-				last_tick_shooted = true;
+				//if (vars.ragebot.backshoot_bt) 
+				//}
+				//last_tick_shooted = true;
 			}
 		}
 	}
