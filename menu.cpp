@@ -706,7 +706,7 @@ void c_menu::render() {
 				main_child->add_element(new c_checkbox("knife bot",
 					&vars.misc.knifebot));
 
-				main_child->add_element(new c_checkbox("cheat clan-tag",
+				main_child->add_element(new c_checkbox("horizon clan-tag",
 					&vars.visuals.clantagspammer));
 			
 				main_child->add_element(new c_checkbox("hold firing animation",
@@ -794,7 +794,7 @@ void c_menu::render() {
 
 	if (!vars.menu.open) {
 		if (window->get_transparency() > 0.f)
-			window->decrease_transparency(animation_speed * 80.f);
+			window->decrease_transparency(animation_speed * 65.f);
 	}
 	
 	ImGui::GetIO().MouseDrawCursor = window->get_transparency() > 0;

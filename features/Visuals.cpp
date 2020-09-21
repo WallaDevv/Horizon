@@ -165,6 +165,8 @@ void CVisuals::DrawAngleLine(Vector origin, float angle, color_t color)
 	}
 }
 
+
+
 void CVisuals::DrawLocalShit(IDirect3DDevice9* pDevice)
 {
 	if (csgo->local && csgo->local->isAlive() && csgo->weapon)
