@@ -807,32 +807,29 @@ void Ragebot::DropTarget()
 }
 bool CockRevolver()
 {
+
 	if (!vars.ragebot.enable)
 		return false;
 
-	if (!csgo->local)
-		return false;
+	// 0.234375f to cock and shoot, 15 ticks in 64 servers, 30(31?) in 128
 
-	static auto r8cock_flag = true;
-	static auto r8cock_time = 0.0f;
+	// THIS DOESNT WORK, WILL WORK ON LATER AGAIN WHEN I FEEL LIKE KILLING MYSELF
 
-	//ZALUPA
-	float REVOLVER_COCK_TIME = 0.2421875f;
+	// DONT USE TIME_TO_TICKS as these values aren't good for it. it's supposed to be 0.2f but that's also wrong
+	constexpr float REVOLVER_COCK_TIME = 0.2421875f;
 	const int count_needed = floor(REVOLVER_COCK_TIME / interfaces.global_vars->interval_per_tick);
 	static int cocks_done = 0;
 
 	if (!csgo->weapon ||
 		csgo->weapon->GetItemDefinitionIndex() != WEAPON_REVOLVER ||
-		csgo->weapon->NextPrimaryAttack() > interfaces.global_vars->curtime)
+		csgo->local->m_flNextAttack() > interfaces.global_vars->curtime ||
+		csgo->local->IsDormant())
 	{
 		if (csgo->weapon && csgo->weapon->GetItemDefinitionIndex() == WEAPON_REVOLVER)
 			csgo->cmd->buttons &= ~IN_ATTACK;
-		Ragebot::Get().shot = false;
-		csgo->weapon_struct.work = false;
-		return false;
+		cocks_done = 0;
+		return true;
 	}
-
-	csgo->weapon_struct.work = true;
 
 	if (cocks_done < count_needed)
 	{
@@ -847,23 +844,40 @@ bool CockRevolver()
 		return true;
 	}
 
+	// 0.0078125 - 128ticks - 31 - 0.2421875
+	// 0.015625  - 64 ticks - 16 - 0.234375f
+
 	csgo->cmd->buttons |= IN_ATTACK;
-	float curtime = csgo->local->GetTickBase() * interfaces.global_vars->interval_per_tick;
+
+	/*
+		3 steps:
+
+		1. Come, not time for update, cock and return false;
+
+		2. Come, completely outdated, cock and set time, return false;
+
+		3. Come, time is up, cock and return true;
+
+		Notes:
+			Will I not have to account for high ping when I shouldn't send another update?
+			Lower framerate than ticks = riperino? gotta check if lower then account by sending earlier | frametime memes
+	*/
+
+	float curtime = (csgo->local->GetTickBase());
 	static float next_shoot_time = 0.f;
 
 	bool ret = false;
 
-	if (fabsf(next_shoot_time - curtime) < 0.5)
-		next_shoot_time = curtime + 0.2f - interfaces.global_vars->interval_per_tick; // -1 because we already cocked THIS tick ???
+	if (next_shoot_time - curtime < -0.5)
+		next_shoot_time = curtime + 0.2f - interfaces.global_vars->interval_per_tick;
 
 	if (next_shoot_time - curtime - interfaces.global_vars->interval_per_tick <= 0.f)
 	{
 		next_shoot_time = curtime + 0.2f;
 		ret = true;
-		// should still go for one more tick but if we do, we're gonna shoot sooo idk how2do rn, its late
-		// the aimbot should decide whether to shoot or not yeh
 	}
 	return ret;
+	//recoded by kyle
 }
 
 string HitboxToString(int id)
@@ -896,7 +910,7 @@ string ShotSnapshot::get_info() {
 	string ret;
 	ret += " [Hitchance:" + hitbox_where_shot + "] ";
 	if (vars.ragebot.resolver && resolver.size() > 0)
-		ret += " [Resover:" + resolver + "] ";
+		ret += " [Resolver:" + resolver + "] ";
 	if (vars.ragebot.posadj) {
 		ret += " [Backtrack:" + std::to_string(backtrack) + "] ";
 		if (record->didshot)
@@ -1112,7 +1126,7 @@ void Ragebot::Run()
 
 		csgo->should_stop_slide = false;
 
-		static int dt_shot_tick = 25;
+		static int dt_shot_tick = 30;
 		auto wpn_info = weapon->GetCSWpnData();
 		if (csgo->local->GetFlags() & FL_ONGROUND && !vars.antiaim.slowwalk->active) {
 			auto get_standing_accuracy = [&]() -> const float
@@ -1176,8 +1190,7 @@ void Ragebot::Run()
 		{
 			if (csgo->cmd->buttons & IN_ATTACK) {
 				csgo->last_forced_tickcount = csgo->cmd->tick_count;
-				csgo->cmd->viewangles = Math::CalculateAngle(csgo->local->GetEyePosition(), current_aim_position) - csgo->local->GetPunchAngle() * 2.f;
-
+				csgo->cmd->viewangles = Math::CalculateAngle(csgo->local->GetEyePosition(), current_aim_position) - csgo->local->GetPunchAngle() * 2.0f;
 				if (!vars.ragebot.silentaim)
 					interfaces.engine->SetViewAngles(csgo->cmd->viewangles);
 
@@ -1186,6 +1199,7 @@ void Ragebot::Run()
 				ShotSnapshot snapshot;
 				tick_record record;
 				snapshot.entity = best_anims->player;
+				snapshot.resolver = best_anims->player->GetIndex();
 				snapshot.hitbox_where_shot = HitboxToString(hitbox);
 				snapshot.resolver = ResolverMode[best_anims->player->GetIndex()];
 				snapshot.time = interfaces.global_vars->interval_per_tick * csgo->local->GetTickBase();
@@ -1203,7 +1217,7 @@ void Ragebot::Run()
 				shot = true;
 				last_shot_tick = clock();
 				csgo->firedshots[best_anims->player->GetIndex()]++;
-				if (vars.ragebot.shotrecord) {
+				if (vars.ragebot.double_tap) {
 					DrawCapsule(best_anims);
 				}
 				last_tick_shooted = true;
