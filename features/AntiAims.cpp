@@ -216,10 +216,10 @@ void CMAntiAim::Freestanding()
 void CMAntiAim::Pitch()
 {
 	switch (vars.antiaim.pitch % 4) {
-	case 0: csgo->cmd->viewangles.x = 90; break;
-	case 1:	csgo->cmd->viewangles.x = 0; break;
-	case 2:	csgo->cmd->viewangles.x = -90; break;
-	case 3:	csgo->cmd->viewangles.x = -180; break;
+	case 0: csgo->cmd->viewangles.x = 90; break;//pitch down
+	case 1:	csgo->cmd->viewangles.x = 0; break;//pitch zero
+	case 2:	csgo->cmd->viewangles.x = -90; break;//pitch up
+	case 3:	csgo->cmd->viewangles.x = -180; break;//random?
 	}
 }
 void CMAntiAim::Sidemove() {
