@@ -1112,10 +1112,10 @@ void Ragebot::Run()
 
 		csgo->should_stop_slide = false;
 
-		static int dt_shot_tick = 15;
+		static int dt_shot_tick = 25;
 		auto wpn_info = weapon->GetCSWpnData();
 		if (csgo->local->GetFlags() & FL_ONGROUND && !vars.antiaim.slowwalk->active) {
-			/*auto get_standing_accuracy = [&]() -> const float
+			auto get_standing_accuracy = [&]() -> const float
 			{
 				const auto max_speed = weapon->GetZoomLevel() > 0 ? wpn_info->m_flMaxSpeedAlt : wpn_info->m_flMaxSpeed;
 				return max_speed / 3.f;
@@ -1139,7 +1139,7 @@ void Ragebot::Run()
 					csgo->stop_speed = 0.05f;
 					csgo->should_stop_slide = true;
 				}
-			}*/
+			}
 			if (!csgo->weapon->IsZeus()) {
 				bool should_stop = GetTicksToShoot() <= GetTicksToStop()
 					|| ((CurrentSettings().quickstop_options & 1) && !is_able_to_shoot
@@ -1203,9 +1203,9 @@ void Ragebot::Run()
 				shot = true;
 				last_shot_tick = clock();
 				csgo->firedshots[best_anims->player->GetIndex()]++;
-				//if (vars.ragebot.shotrecord) {
-					//DrawCapsule(best_anims);
-				//}
+				if (vars.ragebot.shotrecord) {
+					DrawCapsule(best_anims);
+				}
 				last_tick_shooted = true;
 			}
 		}

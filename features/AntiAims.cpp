@@ -202,6 +202,8 @@ void CMAntiAim::Yaw(bool& send_packet)
 
 	float inverter = vars.antiaim.inverter->active ? 0 : 1;
 
+
+
 	static float s_add = 0.f;
 	static bool b_switch = false;
 	int side = csgo->SwitchAA ? 1 : -1;
