@@ -384,17 +384,21 @@ Vector Ragebot::FullScan(animation* anims, int& hitbox, float& simtime, float& b
 				}
 			}
 		}
+
+
 		if (baim_if_lethal && best_damage > health + 2) {
 			target_lethal = true;
 			RestorePlayer(anims);
 			return best_point;
+			
 		}
 		if (best_damage > 0 && CurrentSettings().adaptive_baim) {
-			if (CanDT() && csgo->dt_charged) {
+			if (CanDT() && csgo->dt_charged, TIME_TO_TICKS(0.2f)) {
 				if (best_damage * 2.f > health) {
 					target_lethal = true;
 					RestorePlayer(anims);
 					return best_point;
+
 				}
 			}
 			else {
@@ -1177,7 +1181,7 @@ void Ragebot::Run()
 			{
 				if (!csgo->fake_duck || !vars.antiaim.fakelag_onshot) {
 					csgo->send_packet = true;
-					csgo->max_fakelag_choke = CanDT() ? 1 : 2;
+					csgo->max_fakelag_choke = CanDT() ? 4 : 12;
 				}
 
 				if (vars.antiaim.fakeduck->active)
