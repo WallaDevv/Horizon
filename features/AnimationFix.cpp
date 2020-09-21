@@ -78,16 +78,16 @@ void Extrapolate(IBasePlayer* player, Vector& origin, Vector& velocity, int& fla
 		flags |= FL_ONGROUND;
 }
 
-bool animation::is_valid(float range = .2f, float max_unlag = .2f)
+bool animation::is_valid(float range = 0.2f, float max_unlag = 0.2f)
 {
 	if (!interfaces.engine->GetNetChannelInfo() || !valid)
 		return false;
 
 	const auto correct = std::clamp(interfaces.engine->GetNetChannelInfo()->GetLatency(FLOW_INCOMING)
 		+ interfaces.engine->GetNetChannelInfo()->GetLatency(FLOW_OUTGOING)
-		+ calculate_lerp(), 2.f, max_unlag);
+		+ calculate_lerp(), 0.f, max_unlag);
 	if (CanDT() && csgo->dt_charged && !CMAntiAim::Get().did_shot && !vars.ragebot.disable_dt_delay)
-		range += TICKS_TO_TIME(2);
+		range += TICKS_TO_TIME(8);
 	return fabsf(correct - (interfaces.global_vars->curtime - sim_time)) < range && correct < 2.f;
 }
 
