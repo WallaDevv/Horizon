@@ -106,9 +106,9 @@ animation::animation(IBasePlayer* player)
 	obb_maxs = player->GetMaxs();
 	memcpy(layers, player->GetAnimOverlays(), sizeof(CAnimationLayer) * 13);
 	poses = player->m_flPoseParameter();
-	//if ((has_anim_state = player->GetPlayerAnimState()))
+	if ((has_anim_state = player->GetPlayerAnimState()))
 	anim_state = player->GetPlayerAnimState();
-	//anim_time = player->GetOldSimulationTime() + interfaces.global_vars->interval_per_tick;
+	anim_time = player->GetOldSimulationTime() + interfaces.global_vars->interval_per_tick;
 	sim_time = player->GetSimulationTime();
 	interp_time = 0.f;
 	last_shot_time = weapon ? weapon->GetLastShotTime() : 0.f;
@@ -136,30 +136,30 @@ animation::animation(IBasePlayer* player, Vector last_reliable_angle) : animatio
 
 void animation::restore(IBasePlayer* player) const
 {
-	//player->GetVelocity() = velocity;
+	player->GetVelocity() = velocity;
 	player->GetFlagsPtr() = flags;
-	//player->GetEFlags() = eflags;
+	player->GetEFlags() = eflags;
 	player->GetDuckAmount() = duck;
 	memcpy(player->GetAnimOverlays(), layers, sizeof(CAnimationLayer) * 13);
-	//player->GetLBY() = lby;
+	player->GetLBY() = lby;
 	player->GetOrigin() = origin;
 	player->SetAbsOrigin(abs_origin);
-	//player->m_flPoseParameter() = poses;
+	player->m_flPoseParameter() = poses;
 }
 
 void animation::apply(IBasePlayer* player) const
 {
-	//player->m_flPoseParameter() = poses;
+	player->m_flPoseParameter() = poses;
 	*player->GetEyeAnglesPointer() = eye_angles;
-	//player->GetVelocity() = velocity;
-	//player->GetLBY() = lby;
+	player->GetVelocity() = velocity;
+	player->GetLBY() = lby;
 	player->GetDuckAmount() = duck;
 	player->GetFlagsPtr() = flags;
 	player->GetOrigin() = origin;
 	player->SetAbsOrigin(abs_origin);
-	/*if (anim_state) {
+	if (anim_state) {
 		player->SetAnimState(anim_state);
-	}*/
+	}
 }
 
 void animation::build_server_bones(IBasePlayer* player)
@@ -257,10 +257,10 @@ void CMAnimationFix::animation_info::update_animations(animation* record, animat
 
 		if (record->didshot)
 		{
-			//player->GetEyeAngles() = record->last_reliable_angle;
+			player->GetEyeAngles() = record->last_reliable_angle;
 
-			//if (record->last_shot_time <= time)
-			//	player->GetEyeAngles() = record->eye_angles;
+			if (record->last_shot_time <= time)
+				player->GetEyeAngles() = record->eye_angles;
 		}
 
 		record->resolver = ResolverMode[player->GetIndex()];
