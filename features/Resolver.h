@@ -10,6 +10,7 @@ private:
 	bool TargetJitter(IBasePlayer*, bool);
 	bool DoesHaveJitter(IBasePlayer*, int*);
 	int FreestandSide[64];
+	int FreestandSide2[64];
 public:
 	float GetAngle(IBasePlayer*);
 	float GetForwardYaw(IBasePlayer*);

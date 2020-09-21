@@ -1181,7 +1181,7 @@ void Ragebot::Run()
 			{
 				if (!csgo->fake_duck || !vars.antiaim.fakelag_onshot) {
 					csgo->send_packet = true;
-					csgo->max_fakelag_choke = CanDT() ? 4 : 12;
+					csgo->max_fakelag_choke = CanDT() ? 2 : 10;
 				}
 
 				if (vars.antiaim.fakeduck->active)

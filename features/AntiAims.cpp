@@ -1,6 +1,8 @@
 #include "../hooks/Hooks.h"
 #include "AntiAims.h"
 #include "Ragebot.h"
+#include "Resolver.h"
+
 bool CanDT() {
 	int idx = csgo->weapon->GetItemDefinitionIndex();
 	return csgo->local->isAlive() && csgo->weapon->DTable()
@@ -126,6 +128,91 @@ void CMAntiAim::Fakelag(bool& send_packet)
 	}
 }
 
+void CMAntiAim::Freestanding()
+{
+	if (!csgo->local->isAlive())
+		return;
+
+	if (!csgo->weapon->IsGun())
+		return;
+
+
+	for (int i = 1; i < interfaces.engine->GetMaxClients(); ++i)
+	{
+		auto player = interfaces.ent_list->GetClientEntity(i);
+
+		if (!player || !player->isAlive() || player->IsDormant() || player->GetTeam() == csgo->local->GetTeam())
+			continue;
+
+		bool Autowalled = false, HitSide1 = false, HitSide2 = false;
+		auto idx =
+
+			player->GetIndex();
+		float angToLocal = Math::CalculateAngle(csgo->local->GetOrigin(),
+
+			player->GetOrigin()).y;
+		Vector ViewPoint = csgo->local->GetOrigin() + Vector(0, 0, 90);
+		Vector2D Side1 = { (45 * sin(DEG2RAD(angToLocal))),(45 * cos(DEG2RAD(angToLocal))) };
+		Vector2D Side2 = { (45 * sin(DEG2RAD(angToLocal + 180))) ,(45 * cos(DEG2RAD(angToLocal + 180))) };
+
+		Vector2D Side3 = { (58 * sin(DEG2RAD(angToLocal))),(58 * cos(DEG2RAD(angToLocal))) };
+		Vector2D Side4 = { (58 * sin(DEG2RAD(angToLocal + 180))) ,(58 * cos(DEG2RAD(angToLocal + 180))) };
+
+		Vector Origin = player->GetOrigin();
+
+		Vector2D OriginLeftRight[] = { Vector2D(Side1.x, Side1.y), Vector2D(Side2.x, Side2.y) };
+
+		Vector2D OriginLeftRightLocal[] = { Vector2D(Side3.x, Side3.y), Vector2D(Side4.x, Side4.y) };
+
+		for (int side = 0; side < 2; side++)
+		{
+			Vector OriginAutowall = { Origin.x + OriginLeftRight[side].x, Origin.y - OriginLeftRight[side].y , Origin.z + 90 };
+			Vector ViewPointAutowall = { ViewPoint.x + OriginLeftRightLocal[side].x, ViewPoint.y - OriginLeftRightLocal[side].y , ViewPoint.z };
+
+			if (g_AutoWall.CanHitFloatingPoint(OriginAutowall, ViewPoint))
+			{
+				if (side == 0)
+				{
+					HitSide1 = true;
+					FreestandSide2[idx] = -1;
+				}
+				else if (side == 1)
+				{
+					HitSide2 = true;
+					FreestandSide2[idx] = 1;
+				}
+
+				Autowalled = true;
+			}
+			else
+			{
+				for (int sidealternative = 0; sidealternative < 2; sidealternative++)
+				{
+					Vector ViewPointAutowallalternative = { Origin.x + OriginLeftRight[sidealternative].x, Origin.y - OriginLeftRight[sidealternative].y , Origin.z + 90 };
+
+					if (g_AutoWall.CanHitFloatingPoint(ViewPointAutowallalternative, ViewPointAutowall))
+					{
+						if (sidealternative == 0)
+						{
+							HitSide1 = true;
+							FreestandSide2[idx] = -1;
+							//FreestandAngle[pPlayerEntity->EntIndex()] = 90;
+						}
+						else if (sidealternative == 1)
+						{
+							HitSide2 = true;
+							FreestandSide2[idx] = 1;
+							//FreestandAngle[pPlayerEntity->EntIndex()] = -90;
+						}
+
+						Autowalled = true;
+					}
+				}
+			}
+		}
+	}
+}
+
 void CMAntiAim::Pitch()
 {
 	switch (vars.antiaim.pitch % 4) {
@@ -225,6 +312,7 @@ void CMAntiAim::Yaw(bool& send_packet)
 		b_switch = csgo->SwitchAA;
 
 
+	
 
 	if (vars.antiaim.aa_override.enable)
 	{
@@ -307,6 +395,12 @@ void CMAntiAim::Yaw(bool& send_packet)
 
 void CMAntiAim::Run(bool& send_packet)
 {
+
+	if (!vars.antiaim.freestanding) {
+		Freestanding();
+		return;
+	}
+
 	if (vars.antiaim.slowwalk->active || csgo->should_stop_slide)
 	{
 		const auto weapon = csgo->weapon;

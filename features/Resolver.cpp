@@ -61,7 +61,7 @@ void CResolver::DetectSide(IBasePlayer* player, int* side)
 
 	filter.pSkip = player;
 	src3D = player->GetEyePosition();
-	dst3D = src3D + (forward * 384); //Might want to experiment with other numbers, incase you don't know what the number does, its how far the trace will go. Lower = shorter.
+	dst3D = src3D + (forward * 680); //Might want to experiment with other numbers, incase you don't know what the number does, its how far the trace will go. Lower = shorter.
 
 	ray.Init(src3D, dst3D);
 	interfaces.trace->TraceRay(ray, MASK_SHOT, &filter, &tr);

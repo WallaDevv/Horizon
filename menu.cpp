@@ -402,6 +402,8 @@ void c_menu::render() {
 					},
 					enable_antiaim));
 
+				antiaim_main->add_element(new c_checkbox("Freestanding", &vars.antiaim.freestanding));
+
 				antiaim_main->add_element(new c_keybind("Inverter", vars.antiaim.inverter,
 					[]() { return enable_antiaim(); }));
 
@@ -444,7 +446,7 @@ void c_menu::render() {
 				antiaim_main->add_element(new c_slider("", &vars.antiaim.fakelagvariance, 0.f, 100.f, "%.0f ticks to switch",
 					[]() { return enable_antiaim() && vars.antiaim.fakelag == 2; }));
 
-				antiaim_main->add_element(new c_checkbox("on shot fake lag",
+				antiaim_main->add_element(new c_checkbox("teleport exploit",
 					&vars.antiaim.fakelag_onshot, []() { return enable_antiaim() && vars.antiaim.fakelag; }));
 
 				antiaim_main->add_element(new c_keybind("fake duck", vars.antiaim.fakeduck,

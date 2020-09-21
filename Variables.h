@@ -161,6 +161,7 @@ struct CGlobalVariables
 		int desync_type;
 		int pitch;
 		int jitterrange;
+		bool freestanding;
 	} antiaim;
 	struct
 	{

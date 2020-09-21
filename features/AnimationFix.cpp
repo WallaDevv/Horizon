@@ -106,7 +106,7 @@ animation::animation(IBasePlayer* player)
 	obb_maxs = player->GetMaxs();
 	memcpy(layers, player->GetAnimOverlays(), sizeof(CAnimationLayer) * 13);
 	poses = player->m_flPoseParameter();
-	//if ((has_anim_state = player->GetPlayerAnimState()))
+	if ((has_anim_state = player->GetPlayerAnimState()))
 	anim_state = player->GetPlayerAnimState();
 	anim_time = player->GetOldSimulationTime() + interfaces.global_vars->interval_per_tick;
 	sim_time = player->GetSimulationTime();

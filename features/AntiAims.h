@@ -19,6 +19,8 @@ private:
 public:
 	bool did_shot = false;
 	void Fakelag(bool& send_packet);
+	void Freestanding();
+	int FreestandSide2[64];
 	void Sidemove();
 	float corrected_tickbase();
 	void Run(bool& send_packet);
