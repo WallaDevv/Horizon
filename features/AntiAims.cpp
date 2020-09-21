@@ -130,6 +130,11 @@ void CMAntiAim::Fakelag(bool& send_packet)
 
 void CMAntiAim::Freestanding()
 {
+
+	if (!vars.antiaim.freestanding) {
+		Freestanding();
+	}
+
 	if (!csgo->local->isAlive())
 		return;
 
@@ -395,12 +400,6 @@ void CMAntiAim::Yaw(bool& send_packet)
 
 void CMAntiAim::Run(bool& send_packet)
 {
-
-	if (!vars.antiaim.freestanding) {
-		Freestanding();
-		return;
-	}
-
 	if (vars.antiaim.slowwalk->active || csgo->should_stop_slide)
 	{
 		const auto weapon = csgo->weapon;
