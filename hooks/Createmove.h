@@ -177,7 +177,7 @@ void ProcessMissedShots()
 					const auto angle = Math::CalculateAngle(snapshot.start, snapshot.impact);
 					Vector forward;
 					Math::AngleVectors(angle, forward);
-					const auto end = snapshot.impact + forward * 2000.f;
+					const auto end = snapshot.impact + forward * 1000.f;
 					if (!CanHitHitbox(snapshot.start, end, snapshot.record, studio_model, snapshot.hitbox))
 						spread = true;
 				}
@@ -292,11 +292,11 @@ void __fastcall Hooked_RunCommand(void* ecx, void* edx, IBasePlayer* player, CUs
 			if (csgo->g_bOverrideVelMod && ucmd->command_number == csgo->client_state->nLastCommandAck + 1)
 				csgo->local->GetVelocityModifier() = csgo->g_flVelMod;
 
-			//FixRevolver();
+			FixRevolver();
 
 			H::RunCommand(ecx, player, ucmd, moveHelper);
 
-			//FixRevolver();
+			FixRevolver();
 
 			if (ucmd->command_number == csgo->shot_cmd)
 			{
@@ -826,9 +826,9 @@ void __stdcall hl_create_move(int sequence_number, float input_sample_frametime,
 	DoClantag();
 
 	if (csgo->local->isAlive()) {
-		if (csgo->skip_ticks > 0 && !csgo->dt_charged) {
+		if (csgo->skip_ticks > 2.f && !csgo->dt_charged) {
 			csgo->skip_ticks--;
-			if (csgo->skip_ticks == 0) {
+			if (csgo->skip_ticks == 2.f) {
 				csgo->dt_charged = true;
 			}
 			cmd->tick_count = INT_MAX;
