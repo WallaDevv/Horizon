@@ -19,7 +19,7 @@ bool c_button::update()
 	bool inactive = active;
 	if (inactive) inactive = !active();
 	auto pos = c->get_cursor_position();
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	bool h = hovered();
 	auto wnd = (c_window*)c->get_parent();
 	if (!wnd)
@@ -68,7 +68,7 @@ bool c_button::hovered()
 	if (!wnd)
 		return false;
 	auto pos = c->get_cursor_position();
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	return g_mouse.x > pos.x && g_mouse.y > pos.y
 		&& g_mouse.x < pos.x + size.x && g_mouse.y < pos.y + size.y && !wnd->g_active_element;
 }
@@ -81,7 +81,7 @@ void c_button::render() {
 	c_child* c = (c_child*)child;
 	auto pos = c->get_cursor_position();
 	
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 
 	auto wnd = (c_window*)c->get_parent();
 	if (!wnd) return;

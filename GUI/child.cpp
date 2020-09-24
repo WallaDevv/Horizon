@@ -91,7 +91,6 @@ void c_child::render() {
 	g_Render->Rect(pos.x, pos.y, size.x, size.y, clr);
 	g_Render->DrawString(pos.x + size.x / 2, pos.y, color_t(255, 255, 255, alpha),
 		render::centered_y | render::centered_x, fonts::menu_main, get_title().c_str(), total_elements_size, scroll);
-	//g_Render->DrawLine(pos.x + 1, pos.y + 15.f, pos.x + 1, pos.y + 15.f + total_elements_size);
 }
 int c_child::get_total_offset() { return (int)get_size().y + 10; }
 bool c_child::update()
@@ -123,14 +122,14 @@ bool c_child::update()
 	}
 
 	if (should_draw_scroll && !hovering_listbox) {
-		/*if (scroll.animation > 0) {
+		if (scroll.animation > 0) {
 			scroll.value += int(animation_speed * 75.f);
 			scroll.animation -= int(animation_speed * 75.f);
 		}
 		else if (scroll.animation < 0) {
 			scroll.value -= int(animation_speed * 75.f);
 			scroll.animation += int(animation_speed * 75.f);
-		}*/
+		}
 		scroll.value = clamp(scroll.value, 0.f, clamp(total_elements_size - size.y + 20.f, 0.f, FLT_MAX));
 
 		int max_scroll_value = total_elements_size - size.y + 20.f;

@@ -393,8 +393,8 @@ Vector Ragebot::FullScan(animation* anims, int& hitbox, float& simtime, float& b
 			
 		}
 		if (best_damage > 0.2f && CurrentSettings().adaptive_baim) {
-			if (CanDT() && csgo->dt_charged, TIME_TO_TICKS(0.2f)) {
-				if (best_damage * 2.f > health) {
+			if (CanDT() && csgo->dt_charged) {
+				if (best_damage * 0.f > health) {
 					target_lethal = true;
 					RestorePlayer(anims);
 					return best_point;
@@ -809,79 +809,28 @@ void Ragebot::DropTarget()
 	csgo->should_stop = false;
 	g_AutoWall.reset();
 }
-bool CockRevolver()
+
+void AutoCockRevolver(IBasePlayer* local, CUserCmd* cmd)
 {
-
 	if (!vars.ragebot.enable)
-		return false;
+		return;
 
-	// 0.234375f to cock and shoot, 15 ticks in 64 servers, 30(31?) in 128
+	auto weapon = csgo->weapon;
+	if (weapon->get_item_definition_index() != WEAPON_REVOLVER)
+		return;
 
-	// THIS DOESNT WORK, WILL WORK ON LATER AGAIN WHEN I FEEL LIKE KILLING MYSELF
+	if (weapon->CanFire())
+		return;
 
-	// DONT USE TIME_TO_TICKS as these values aren't good for it. it's supposed to be 0.2f but that's also wrong
-	constexpr float REVOLVER_COCK_TIME = 0.2421875f;
-	const int count_needed = floor(REVOLVER_COCK_TIME / interfaces.global_vars->interval_per_tick);
-	static int cocks_done = 0;
+	static int delay = 0;
+	delay--;
 
-	if (!csgo->weapon ||
-		csgo->weapon->GetItemDefinitionIndex() != WEAPON_REVOLVER ||
-		csgo->local->m_flNextAttack() > interfaces.global_vars->curtime ||
-		csgo->local->IsDormant())
-	{
-		if (csgo->weapon && csgo->weapon->GetItemDefinitionIndex() == WEAPON_REVOLVER)
-			csgo->cmd->buttons &= ~IN_ATTACK;
-		cocks_done = 0;
-		return true;
-	}
-
-	if (cocks_done < count_needed)
-	{
-		csgo->cmd->buttons |= IN_ATTACK;
-		++cocks_done;
-		return false;
-	}
+	if (delay <= 28)
+		cmd->buttons |= IN_ATTACK;
 	else
-	{
-		csgo->cmd->buttons &= ~IN_ATTACK;
-		cocks_done = 0;
-		return true;
-	}
 
-	// 0.0078125 - 128ticks - 31 - 0.2421875
-	// 0.015625  - 64 ticks - 16 - 0.234375f
 
-	csgo->cmd->buttons |= IN_ATTACK;
-
-	/*
-		3 steps:
-
-		1. Come, not time for update, cock and return false;
-
-		2. Come, completely outdated, cock and set time, return false;
-
-		3. Come, time is up, cock and return true;
-
-		Notes:
-			Will I not have to account for high ping when I shouldn't send another update?
-			Lower framerate than ticks = riperino? gotta check if lower then account by sending earlier | frametime memes
-	*/
-
-	float curtime = (csgo->local->GetTickBase());
-	static float next_shoot_time = 0.2421875;
-
-	bool ret = false;
-
-	if (next_shoot_time - curtime < -0.5)
-		next_shoot_time = curtime + 0.2f - interfaces.global_vars->interval_per_tick;
-
-	if (next_shoot_time - curtime - interfaces.global_vars->interval_per_tick <= 0.f)
-	{
-		next_shoot_time = curtime + 0.2f;
-		ret = true;
-	}
-	return ret;
-	//recoded by kyle
+		delay = 0;	
 }
 
 string HitboxToString(int id)
@@ -1069,9 +1018,8 @@ void Ragebot::Run()
 	csgo->stop_speed = 0.f;
 
 	bool in_air = !(csgo->local->GetFlags() & FL_ONGROUND);
-	bool cock_revolver = CockRevolver();
 
-	bool is_able_to_shoot = IsAbleToShoot() || (weapon->GetItemDefinitionIndex() == WEAPON_REVOLVER && cock_revolver);
+	bool is_able_to_shoot = IsAbleToShoot();
 
 	for (auto i = 1; i <= interfaces.global_vars->maxClients; i++)
 	{
@@ -1181,7 +1129,7 @@ void Ragebot::Run()
 			{
 				if (!csgo->fake_duck || !vars.antiaim.fakelag_onshot) {
 					csgo->send_packet = true;
-					csgo->max_fakelag_choke = CanDT() ? 2 : 10;
+					csgo->max_fakelag_choke = CanDT() ? 14 : 8;
 				}
 
 				if (vars.antiaim.fakeduck->active)

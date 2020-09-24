@@ -10,7 +10,7 @@ bool c_combo::hovered()
 	auto pos = c->get_cursor_position();
 	if (!c->hovered())
 		return false;
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	if (label.size() > 0)
 		pos.y += after_text_offset;
 	return g_mouse.x >= pos.x && g_mouse.y >= pos.y
@@ -29,7 +29,7 @@ bool c_combo::update()
 		return false;
 	if (wnd->g_active_element != this && wnd->g_active_element != nullptr) return false;
 	auto pos = c->get_cursor_position();
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 
 	bool h = hovered();
 	if (h) wnd->g_hovered_element = this;
@@ -114,7 +114,7 @@ void c_combo::render() {
 		return;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(wnd->get_transparency() * 2.55f);
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 
 	bool h = hovered();
 
@@ -134,8 +134,6 @@ void c_combo::render() {
 		g_Render->FilledRect(pos.x, pos.y, size.x, size.y,
 			color_t(25.f, 25.f, 25.f, alpha));
 		auto base = ImVec2(pos.x + size.x - 10, pos.y + size.y / 2);
-		g_Render->_drawList->AddTriangleFilled(
-			ImVec2(base.x - 3, base.y + 2), ImVec2(base.x + 3, base.y + 2), ImVec2(base.x, base.y - 4), color_t(255, 255, 255, new_alpha).u32());
 		g_Render->DrawString(pos.x + 10, pos.y + size.y / 2, color_t(255, 255, 255, alpha), render::centered_y,
 			fonts::menu_desc, elements[*(int*)value].c_str());
 
@@ -171,8 +169,6 @@ void c_combo::render() {
 			render::centered_y, fonts::menu_desc, elements[*(int*)value].c_str());
 
 		auto base = ImVec2(pos.x + size.x - 10, pos.y + size.y / 2);
-		g_Render->_drawList->AddTriangleFilled(
-			ImVec2(base.x - 4, base.y - 2), ImVec2(base.x + 4, base.y - 2), ImVec2(base.x, base.y + 5), color_t(255, 255, 255, new_alpha).u32());
 	}
 }
 

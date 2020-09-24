@@ -13,7 +13,7 @@ bool c_slider::hovered()
 	auto pos = c->get_cursor_position();
 	if (label.size() > 0)
 		pos.y += after_text_offset;
-	auto this_size = Vector2D(g_size, 12);
+	auto this_size = Vector2D(g_size, 15);
 	return g_mouse.x > pos.x && g_mouse.y > pos.y
 		&& g_mouse.x < pos.x + this_size.x && g_mouse.y < pos.y + this_size.y;
 }
@@ -32,7 +32,7 @@ bool c_slider::update()
 	if (wnd->g_active_element != this && wnd->g_active_element != nullptr) return false;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(c->get_transparency() * 2.55f);
-	auto size = Vector2D(g_size, 12);
+	auto size = Vector2D(g_size, 15);
 
 	bool h = hovered();
 	if (h) wnd->g_hovered_element = this;
@@ -100,7 +100,7 @@ void c_slider::render() {
 	c_child* c = (c_child*)child;
 	auto pos = c->get_cursor_position();
 	
-	auto size = Vector2D(g_size, 12);
+	auto size = Vector2D(g_size, 15);
 	bool h = hovered();
 	auto wnd = (c_window*)c->get_parent();
 	if (!wnd) return;
@@ -108,18 +108,18 @@ void c_slider::render() {
 		return;
 	auto alpha = (int)(wnd->get_transparency() * 2.55f);
 
-	//auto clr = color_t(255, 150, 35.f * animation, alpha);
-	//auto clr2 = color_t(255, 150, 35.f * animation, clamp(alpha - 100.f, 0.f, 255.f));
+	auto clr = color_t(255, 150, 35.f * animation, alpha);
+	auto clr2 = color_t(255, 150, 35.f * animation, clamp(alpha - 100.f, 0.f, 255.f));
 
-	auto clr = color_t(139.f, 0 + 35.f * animation, 255, alpha);
-	auto clr2 = color_t(139.f, 0 + 35.f * animation, 255, clamp(alpha - 100.f, 0.f, 255.f));
+	//auto clr = color_t(139.f, 0 + 35.f * animation, 255, alpha);
+	//auto clr2 = color_t(139.f, 0 + 35.f * animation, 255, clamp(alpha - 100.f, 0.f, 255.f));
 
 
 
 
 	if (label.size() > 0) {
 		g_Render->DrawString(pos.x, pos.y, color_t(200 + 55.f * animation, 200 + 55.f * animation, 200 + 55.f * animation, alpha),
-			render::none, fonts::menu_desc, label.c_str());
+			render::none, fonts::menu_fix, label.c_str());
 		pos.y += after_text_offset;
 	}
 
@@ -132,7 +132,7 @@ void c_slider::render() {
 	g_Render->Rect(pos.x - 1, pos.y - 1, size.x + 2, size.y, color_t(0, 0, 0, alpha));
 	if (this == wnd->g_active_element)
 		c->lock_bounds();
-	g_Render->DrawString(pos.x + size.x / 2, pos.y + size.y / 2 /*- 2*/, color_t(255, 255, 255, alpha),
+	g_Render->DrawString(pos.x + size.x / 2, pos.y + size.y / 2, color_t(255, 255, 255, alpha),
 		render::centered_x | render::centered_y | render::outline, fonts::very_small, format.c_str(), val);
 	if (this == wnd->g_active_element)
 		c->unlock_bounds();

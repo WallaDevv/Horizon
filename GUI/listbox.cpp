@@ -41,7 +41,7 @@ bool c_listbox::update()
 		scroll = 0.f;
 	if (should_draw_scroll)
 		pos.y -= scroll;
-	size = Vector2D(g_size, 20.f);
+	size = Vector2D(g_size, 15.f);
 	for (int i = 0; i < elements.size(); i++) {
 			
 		bool hvrd = g_mouse.x > pos.x && g_mouse.y >= pos.y

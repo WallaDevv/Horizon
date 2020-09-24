@@ -16,7 +16,7 @@ bool c_bar::update()
 	if (!c) return false;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(c->get_transparency() * 2.55f);
-	auto size = Vector2D(g_size, 12);
+	auto size = Vector2D(g_size, 15);
 
 	bool h = hovered();
 
@@ -42,7 +42,7 @@ void c_bar::render() {
 	c_child* c = (c_child*)child;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(c->get_transparency() * 2.55f);
-	auto size = Vector2D(g_size, 12);
+	auto size = Vector2D(g_size, 15);
 	bool h = hovered();
 
 	auto clr = color_t(255, 150, 35.f, alpha);

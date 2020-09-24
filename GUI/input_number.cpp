@@ -17,7 +17,7 @@ bool c_input_number::update()
 		return false;
 	if (wnd->g_active_element != this && wnd->g_active_element != nullptr) return false;
 	auto pos = c->get_cursor_position();
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	if (label.size() > 0)
 		pos.y += after_text_offset;
 	bool h = hovered();
@@ -102,7 +102,7 @@ bool c_input_number::hovered()
 	if (!c->hovered())
 		return false;
 	auto pos = c->get_cursor_position();
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	if (label.size() > 0)
 		pos.y += after_text_offset;
 	return g_mouse.x > pos.x && g_mouse.y > pos.y
@@ -119,7 +119,7 @@ void c_input_number::render() {
 		return;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(wnd->get_transparency() * 2.55f);
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	auto format = get_format();
 	auto text_width = ImGui::CalcTextSize(std::to_string(format).c_str()).x;
 

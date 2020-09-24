@@ -471,12 +471,12 @@ void InitDoubleTap()
 		{
 			prev_shift_ticks = 0;
 
-			auto can_shift_shot = CMAntiAim::Get().can_exploit(16);
+			auto can_shift_shot = CMAntiAim::Get().can_exploit(14);
 			auto can_shot = CMAntiAim::Get().can_exploit(abs(-1 - prev_shift_ticks));
 
 			if (can_shift_shot || !can_shot && !did_shift_before)
 			{
-				prev_shift_ticks = 16;
+				prev_shift_ticks = 14;
 				double_tapped = 0;
 			}
 			else {
@@ -503,7 +503,7 @@ void InitDoubleTap()
 						{
 							if ((!(csgo->cmd->buttons & IN_ATTACK) || !Ragebot::Get().shot) && CMAntiAim::Get().did_shot) {
 								csgo->dt_charged = false;
-								csgo->skip_ticks = vars.ragebot.dt_instant ? 16 : 8;
+								csgo->skip_ticks = vars.ragebot.dt_instant ? 14 : 8;
 								CMAntiAim::Get().did_shot = false;
 							}
 						}
@@ -634,7 +634,7 @@ bool __stdcall Hooked_CreateMove(float a, CUserCmd* cmd) {
 						if (!CanDT())
 							csgo->dt_charged = false;
 						else if (!csgo->dt_charged && csgo->skip_ticks == 0) {
-							csgo->skip_ticks = vars.ragebot.dt_instant ? 16 : 8;
+							csgo->skip_ticks = vars.ragebot.dt_instant ? 14 : 8;
 						}
 					}
 				}

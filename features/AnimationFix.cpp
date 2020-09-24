@@ -87,7 +87,7 @@ bool animation::is_valid(float range = 0.2f, float max_unlag = 0.2f)
 		+ interfaces.engine->GetNetChannelInfo()->GetLatency(FLOW_OUTGOING)
 		+ calculate_lerp(), 0.f, max_unlag);
 	if (CanDT() && csgo->dt_charged && !CMAntiAim::Get().did_shot && !vars.ragebot.disable_dt_delay)
-		range += TICKS_TO_TIME(8);
+		range += TICKS_TO_TIME(2);
 	return fabsf(correct - (interfaces.global_vars->curtime - sim_time)) < range && correct < 2.f;
 }
 
@@ -468,7 +468,7 @@ bool animation::is_valid_extended()
 	float deltaTime = fabsf(correct - (interfaces.global_vars->curtime - sim_time));
 	float ping = 0.2f;
 	if (CanDT() && csgo->dt_charged && !CMAntiAim::Get().did_shot)
-		ping += TICKS_TO_TIME(8);
+		ping += TICKS_TO_TIME(2);
 	return deltaTime < ping && deltaTime >= ping - .2f;
 }
 

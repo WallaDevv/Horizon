@@ -193,20 +193,20 @@ void c_window::render_tabs() {
 	animation228 = clamp(animation228, 0.f, 1.f);
 	g_Render->DrawString(pos.x + 20.f + 1, pos.y + 15.f + tab_size.y / 2 + 1,
 		color_t(90 * pulsating, 90 * pulsating, 90 * pulsating, alpha),
-		render::centered_y, fonts::lby_indicator, hs::weave_logo::s().c_str());
+		render::centered_y, fonts::menu_fix, hs::weave_logo::s().c_str());
 	g_Render->DrawString(pos.x + 20.f - 1, pos.y + 15.f + tab_size.y / 2 - 1,
 		color_t(90 * pulsating, 90 * pulsating, 90 * pulsating, alpha),
-		render::centered_y, fonts::lby_indicator, hs::weave_logo::s().c_str());
+		render::centered_y, fonts::menu_fix, hs::weave_logo::s().c_str());
 	g_Render->DrawString(pos.x + 20.f - 1, pos.y + 15.f + tab_size.y / 2 + 1,
 		color_t(90 * pulsating, 90 * pulsating, 90 * pulsating, alpha),
-		render::centered_y, fonts::lby_indicator, hs::weave_logo::s().c_str());
+		render::centered_y, fonts::menu_fix, hs::weave_logo::s().c_str());
 	g_Render->DrawString(pos.x + 20.f + 1, pos.y + 15.f + tab_size.y / 2 - 1,
 		color_t(90 * pulsating, 90 * pulsating, 90 * pulsating, alpha),
-		render::centered_y, fonts::lby_indicator, hs::weave_logo::s().c_str());
+		render::centered_y, fonts::menu_fix, hs::weave_logo::s().c_str());
 
 	g_Render->DrawString(pos.x + 20.f, pos.y + 15.f + tab_size.y / 2, 
 		color_t(255, 0, 0, alpha),
-		render::centered_y, fonts::lby_indicator, hs::weave_logo::s().c_str());
+		render::centered_y, fonts::menu_fix, hs::weave_logo::s().c_str());
 	
 }
 void c_window::update_animation() {

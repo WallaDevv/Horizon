@@ -58,7 +58,7 @@ bool c_keybind::update()
 		return true;
 	}
 	if (binder.open) {
-		auto size = Vector2D(g_size, 20);
+		auto size = Vector2D(g_size, 15);
 		pos.y += size.y;
 		h = g_mouse.x >= pos.x && g_mouse.y >= pos.y
 			&& g_mouse.x <= pos.x + size.x && g_mouse.y < pos.y + size.y;
@@ -100,7 +100,7 @@ bool c_keybind::update()
 		wnd->g_active_element = this;
 	}
 	else {
-		auto size = Vector2D(g_size, 20);
+		auto size = Vector2D(g_size, 15);
 		h = g_mouse.x > pos.x && g_mouse.y > pos.y
 			&& g_mouse.x < pos.x + size.x && g_mouse.y < pos.y + size.y;
 		if (h && c->hovered() && wnd->is_click() && bind->type > 0) {
@@ -131,7 +131,7 @@ bool c_keybind::hovered()
 		return false;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(c->get_transparency() * 2.55f);
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	return g_mouse.x > pos.x && g_mouse.y > pos.y
 		&& g_mouse.x < pos.x + size.x && g_mouse.y < pos.y + size.y;
 }
@@ -143,7 +143,7 @@ void c_keybind::render() {
 	c_child* c = (c_child*)child;
 	auto pos = c->get_cursor_position();
 	auto wnd = (c_window*)c->get_parent();
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	if (!wnd) return;
 	if (wnd->get_active_tab_index() != this->tab
 		&& wnd->get_tabs().size() > 0) return;
@@ -157,7 +157,7 @@ void c_keybind::render() {
 		clr, clr);
 	g_Render->Rect(pos.x - 1, pos.y - 1, size.x + 2, size.y + 2,
 		color_t(0, 0, 0, alpha));
-	string format = label + ": %s";
+	string format = label + ": Key";
 	g_Render->DrawString(pos.x + size.x / 2, pos.y + size.y / 2, binder.active ? 
 		color_t(84 + 55.f * animation, 25.f - 25.f * animation, 200 + 50.f * animation, alpha) :
 		color_t(200 + 55.f * animation, 200 + 55.f * animation, 200 + 55.f * animation, alpha),
@@ -167,14 +167,12 @@ void c_keybind::render() {
 	if (binder.open) {
 
 		pos.y += size.y;
-		auto size = Vector2D(g_size, 20);
+		auto size = Vector2D(g_size, 15);
 		g_Render->Rect(pos.x - 1, pos.y - 1, size.x + 2, (size.y * (binder.elements.size() + 1)) + 2, color_t(0, 0, 0, alpha));
 		g_Render->FilledRect(pos.x, pos.y, size.x, size.y,
 			color_t(25.f, 25.f, 25.f, alpha));
 
 		auto base = ImVec2(pos.x + size.x - 10, pos.y + size.y / 2);
-		g_Render->_drawList->AddTriangleFilled(
-			ImVec2(base.x - 3, base.y + 2), ImVec2(base.x + 3, base.y + 2), ImVec2(base.x, base.y - 4), color_t(255, 255, 255, alpha).u32());
 
 		g_Render->DrawString(pos.x + 10, pos.y + size.y / 2, color_t(255, 255, 255, alpha), render::centered_y,
 			fonts::menu_desc, "%s (%s)", KeyStrings[bind->key].c_str(), binder.elements[bind->type].c_str());
@@ -192,7 +190,5 @@ void c_keybind::render() {
 	}
 	else {
 		auto base = ImVec2(pos.x + size.x - 10, pos.y + size.y / 2);
-		g_Render->_drawList->AddTriangleFilled(
-			ImVec2(base.x - 4, base.y - 2), ImVec2(base.x + 4, base.y - 2), ImVec2(base.x, base.y + 5), color_t(255, 255, 255, alpha).u32());
 	}
 }

@@ -33,6 +33,7 @@ struct AutostopInfo
 	float call_time;
 	bool did_stop;
 };
+void AutoCockRevolver(IBasePlayer* local, CUserCmd* cmd);
 extern AutostopInfo& get_autostop_info();
 class Ragebot : public Singleton<Ragebot>
 {

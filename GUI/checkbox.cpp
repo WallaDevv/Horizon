@@ -61,7 +61,7 @@ bool c_checkbox::update()
 	}
 	if (bind != nullptr) {
 		if (binder.open) {
-			auto size = Vector2D(g_size, 20);
+			auto size = Vector2D(g_size, 15);
 			pos.y += after_text_offset;
 			h = g_mouse.x >= pos.x && g_mouse.y >= pos.y
 				&& g_mouse.x <= pos.x + size.x && g_mouse.y < pos.y + size.y;
@@ -160,7 +160,7 @@ void c_checkbox::render() {
 	g_Render->DrawString(pos.x, pos.y, color_t(200 + 55.f * animation, 200 + 55.f * animation, 200 + 55.f * animation, alpha),
 		render::none, fonts::menu_desc, label.c_str());
 	g_Render->FilledRect(pos.x - 19, pos.y + 3, 8, 8,
-		!(*(bool*)value) ? color_t(50, 50, 50, alpha) : color_t(main_color.get_red(), main_color.get_green(), main_color.get_blue(),
+		!(*(bool*)value) ? color_t(50, 50, 50, alpha) : color_t(main_color.get_alpha(), main_color.get_alpha(), main_color.get_alpha(),
 			alpha * (1.f - press_animation)));
 	g_Render->Rect(pos.x - 20, pos.y + 2, 10, 10, color_t(animation * 25.f, animation * 25.f, animation * 25.f, alpha));
 	if (bind != nullptr && bind->type > 0) {
@@ -172,7 +172,7 @@ void c_checkbox::render() {
 	if (bind != nullptr && binder.open) {
 
 		pos.y += after_text_offset;
-		auto size = Vector2D(g_size, 20);
+		auto size = Vector2D(g_size, 15);
 		g_Render->Rect(pos.x - 1, pos.y - 1, size.x + 2, (size.y * (binder.elements.size() + 1)) + 2, color_t(0, 0, 0, alpha));
 		g_Render->FilledRect(pos.x, pos.y, size.x, size.y,
 			color_t(25.f, 25.f, 25.f, alpha));

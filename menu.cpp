@@ -358,27 +358,15 @@ void c_menu::render() {
 				main_child->add_element(new c_checkbox("resolver", &vars.ragebot.resolver,
 					enable_rage));
 
-				main_child->add_element(new c_checkbox("hitchance consider hitbox",
-					&vars.ragebot.hitchance_consider_hitbox, enable_rage));
-
 				main_child->add_element(new c_keybind("force baim", vars.ragebot.force_body, []() {
 					return vars.ragebot.enable;
 				}));
-
-				main_child->add_element(new c_colorpicker(&vars.ragebot.shot_clr,
-					color_t(255, 255, 255, 255), [] { return vars.ragebot.enable && vars.ragebot.shotrecord; }));
-
-				main_child->add_element(new c_checkbox("shot record",
-					&vars.ragebot.shotrecord, enable_rage));
-
-				main_child->add_element(new c_keybind("override damage",
-					vars.ragebot.override_dmg,  enable_rage));
-
+				
 				main_child->add_element(new c_keybind("double tap", vars.ragebot.double_tap, []() { 
 					return vars.ragebot.enable;
 				}));
 				 
-				main_child->add_element(new c_checkbox("instant",
+				main_child->add_element(new c_checkbox("instant double tap",
 					&vars.ragebot.dt_instant, []() { return vars.ragebot.double_tap->key > 0; }));
 
 				main_child->initialize_elements();

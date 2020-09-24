@@ -9,7 +9,7 @@ bool c_multicombo::hovered()
 	auto pos = ((c_child*)child)->get_cursor_position();
 	if (!((c_child*)child)->hovered())
 		return false;
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 	if (label.size() > 0)
 		pos.y += after_text_offset;
 	return g_mouse.x >= pos.x && g_mouse.y >= pos.y
@@ -29,7 +29,7 @@ bool c_multicombo::update()
 		return false;
 	if (wnd->g_active_element != this && wnd->g_active_element != nullptr) return false;
 	auto pos = c->get_cursor_position();
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 
 	bool h = hovered();
 	if (h) wnd->g_hovered_element = this;
@@ -117,7 +117,7 @@ void c_multicombo::render() {
 		return;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(wnd->get_transparency() * 2.55f);
-	auto size = Vector2D(g_size, 20);
+	auto size = Vector2D(g_size, 15);
 
 	bool h = hovered();
 
@@ -158,8 +158,6 @@ void c_multicombo::render() {
 			color_t(40 - animation * 10.f, 40 - animation * 10.f, 40 - animation * 10.f, alpha));
 		g_Render->_drawList->PopClipRect();
 		auto base = ImVec2(pos.x + size.x - 10, pos.y + size.y / 2);
-		g_Render->_drawList->AddTriangleFilled(
-			ImVec2(base.x - 3, base.y + 2), ImVec2(base.x + 3, base.y + 2), ImVec2(base.x, base.y - 4), color_t(255, 255, 255, new_alpha).u32());
 
 		for (size_t i = 0; i < elements.size(); i++) {
 			pos.y += size.y;
@@ -168,10 +166,10 @@ void c_multicombo::render() {
 
 			auto clr2 = color_t(200 + animations[i] * 55.f, 200 + animations[i] * 55.f, 200 + animations[i] * 55.f, new_alpha);
 
-			/*g_Render->DrawString(pos.x + 10, pos.y + size.y / 2,
+			g_Render->DrawString(pos.x + 10, pos.y + size.y / 2,
 				((*(unsigned int*)value) & 1 << i) ?
 				color_t(200 + 55.f * animations[i], 100 + 50.f * animations[i], 25.f - 25.f * animations[i], new_alpha) : clr2, render::centered_y,
-				fonts::menu_desc, elements[i].c_str());*/
+				fonts::menu_desc, elements[i].c_str());
 			g_Render->DrawString(pos.x + 10, pos.y + size.y / 2,
 				((*(unsigned int*)value) & 1 << i) ?
 				color_t(84 + 55.f * animations[i], 25.f - 25.f * animations[i], 200 + 50.f * animations[i], new_alpha) : clr2, render::centered_y,
@@ -209,8 +207,6 @@ void c_multicombo::render() {
 
 		auto base = ImVec2(pos.x + size.x - 10, pos.y + size.y / 2);
 		g_Render->_drawList->PopClipRect();
-		g_Render->_drawList->AddTriangleFilled(
-			ImVec2(base.x - 4, base.y - 2), ImVec2(base.x + 4, base.y - 2), ImVec2(base.x, base.y + 5), color_t(255, 255, 255, new_alpha).u32());
 	}
 }
 
