@@ -232,7 +232,7 @@ void c_menu::watermark()
 
 	//g_Render->DrawString(x - 290, 8, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "Loneless");
 	g_Render->DrawString(x - 292, 8, color_t(255, 255, 255, 130), render::outline, fonts::menu_main, "Horizon");
-	g_Render->DrawString(x - 239, 8, color_t(255, 255, 255, 130),  render::outline, fonts::menu_main, " | Dev");
+	g_Render->DrawString(x - 239, 8, color_t(255, 255, 255, 130),  render::outline, fonts::menu_main, " | Beta");
 	g_Render->DrawString(x - 201, 8, color_t(255, 255, 255, 130), render::outline, fonts::menu_main, (" | Fps: %03d"), getfps());
 	g_Render->DrawString(x - 146, 8, color_t(255, 255, 255, 130), render::outline, fonts::menu_main, (" | Ping: %03d"), getping());
 	g_Render->DrawString(x - 86, 8, color_t(255, 255, 255, 130), render::outline, fonts::menu_main,   " | " __TIME__);

@@ -81,21 +81,21 @@ namespace hs {
 	_(weave_su, "");
 	_(weave_logo, "");
 
-	_(clantag1, "          ");
-	_(clantag2, "  H       ");
+	_(clantag1, "  H       ");
+	_(clantag2, "  H0      ");
 	_(clantag3, "  Ho      ");
-	_(clantag4, "  Hor     ");
-	_(clantag5, "  Hori    ");
-	_(clantag6, "  Horiz   ");
-	_(clantag7, "  Horizo  ");
-	_(clantag8, "  Horizon ");
-	_(clantag9, "  Horizo  ");
-	_(clantag10, " Horiz   ");
-	_(clantag11, " Hori    ");
-	_(clantag12, " Hor     ");
-	_(clantag13, " Ho      ");
-	_(clantag14, " H       ");
-	_(clantag15, "         ");
+	_(clantag4, "  Ho7     ");
+	_(clantag5, "  Hor     ");
+	_(clantag6, "  Hor1    ");
+	_(clantag7, "  Hori    ");
+	_(clantag8, "  Hori\   ");
+	_(clantag9, "  Horiz   ");
+	_(clantag10, " Horiz0  ");
+	_(clantag11, " Horizo  ");
+	_(clantag12, " HorizoN ");
+	_(clantag13, " Horizon ");
+	_(clantag14, " Hori    ");
+    _(clantag15, "         ");
 
 	// netvar tables
 	_(DT_BaseEntity, "DT_BaseEntity"); // DT_BaseEntity

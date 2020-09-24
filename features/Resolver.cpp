@@ -236,229 +236,160 @@ void CResolver::Do(IBasePlayer* player) {
 		return;
 
 	float angle = GetAngle(player);
-	//int new_side = 0;
-	//if (DoesHaveJitter(player, &new_side)/* && player->GetEyeAngles().x < 45*/) {
-	// switch (csgo->missedshots[idx] % 2) {
-	// case 0:
-	// ResolverMode[idx] = hs::AB.s();
-	// animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 100.f * new_side);
-	// break;
-	// case 1:
-	// ResolverMode[idx] = hs::AC.s();
-	// animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 100.f * new_side);
-	// break;
-	// }
-	//}
-	//else
+	int new_side = 0;
+	if (DoesHaveJitter(player, &new_side) && player->GetEyeAngles().x < 58) {
+	 switch (csgo->missedshots[idx] % 2) {
+	 case 0:
+	 animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 100.f * new_side);
+	 break;
+	 case 1:
+	 animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 100.f * new_side);
+	 break;
+	 }
+	 }
+	 else
 	{
 		bool forward = fabsf(Math::NormalizeYaw(GetAngle(player) - GetForwardYaw(player))) < 89.f;
-		if (csgo->missedshots[idx] == 0) {
-			ResolverMode[idx] = "Main";
-			animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 0.f);
-			if (csgo->missedshots[idx])
-				animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 58.f);
-			animstate->m_flGoalFeetYaw = remainderf(animstate->m_flGoalFeetYaw, 360.f);
 
-			if (forward) {
-				FreestandSide[idx] *= -1;
-				ResolverMode[idx] += "B";
-				animstate->m_flGoalFeetYaw += 29;
-				if (csgo->missedshots[idx]);
-				animstate->m_flGoalFeetYaw -= 29;
-				animstate->m_flGoalFeetYaw = remainderf(animstate->m_flGoalFeetYaw, 360.f);
+		animstate->m_flGoalFeetYaw = Math::NormalizeYaw(animstate->m_flGoalFeetYaw);
 
-			}
-			else
-				ResolverMode[idx] += "A";
-			animstate->m_flGoalFeetYaw += 20;
-			if (csgo->missedshots[idx]);
-			animstate->m_flGoalFeetYaw -= 20;
-			animstate->m_flGoalFeetYaw = remainderf(animstate->m_flGoalFeetYaw, 360.f);
-
-		}
-		else {
-			if (forward) {
-				switch (csgo->missedshots[idx] % 4) {
-				case 1:
-					ResolverMode[idx] = "DA";
-					if (FreestandSide[idx] == 1)
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 56.f);
-					else
-
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 56.f);
-					break;
-				case 0:
-					ResolverMode[idx] = "DB";
-					if (FreestandSide[idx] == 1)
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 59.f);
-					else
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 59.f);
-					break;
-				case 2:
-					ResolverMode[idx] = "DC";
-					if (FreestandSide[idx] == 1)
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 12.f);
-					else
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 12.f);
-					break;
-				case 3:
-					ResolverMode[idx] = "DT";
-					if (FreestandSide[idx] == 1)
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 79.f);
-					else
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 79.f);
-					break;
-				}
+		float angles = GetAngle(player);
+		int new_side = 0;
+		{
+			bool forward = fabsf(Math::NormalizeYaw(GetAngle(player) - GetForwardYaw(player))) < 90.f;
+			if (csgo->missedshots[idx] == 1) {
 			}
 			else {
-				switch (csgo->missedshots[idx] % 3) {
-				case 1:
-					ResolverMode[idx] = "DA";
-					if (FreestandSide[idx] == 1)
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle
+				if (forward) {
+					switch (csgo->missedshots[idx] == 1) {
 
-							+ 120.f);
-					else
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 158.f);
-					break;
-				case 0:
-					ResolverMode[idx] = "DB";
-					if (FreestandSide[idx] == 1)
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 158.f);
-					else
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 158.f);
-					break;
-				case 2:
-					ResolverMode[idx] = "DC";
-					if (FreestandSide[idx] == 1)
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle - 120.f);
-					else
-						animstate->m_flGoalFeetYaw = Math::NormalizeYaw(angle + 120.f);
-					break;
+					case 0:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 120.0;
+						break;
+					case 1:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 120.0;
+						break;
+					case 2:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 15.0;
+						break;
+					case 3:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 15.0;
+						break;
+					case 4:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 90.0;
+						break;
+					case 5:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 90.0;
+						break;
+					case 6:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 115.0;
+						break;
+					case 7:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 115.0;
+						break;
+					case 8:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 70.0;
+						break;
+					case 9:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 70.0;
+						break;
+					case 10:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 60.0;
+						break;
+					case 11:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 60.0;
+						break;
+					case 12:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 30.0;
+						break;
+					case 13:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 30.0;
+						break;
+					case 14:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 58.0;
+						break;
+					case 15:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 58.0;
+						break;
+					case 16:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 45.0;
+						break;
+					case 17:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 45.0;
+						break;
+					case 18:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 20.0;
+						break;
+					case 19:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 20.0;
+						break;
+					case 20:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 5.0;
+						break;
+					case 21:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 5.0;
+						break;
+					case 22:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 180.0;
+						break;
+					case 23:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 180.0;
+						break;
+					case 24:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 50.0;
+						break;
+					case 25:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 50.0;
+						break;
+					case 26:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 25.0;
+						break;
+					case 27:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 25.0;
+						break;
+					case 28:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 130.0;
+						break;
+					case 29:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 130.0;
+						break;
+					case 30:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 150.0;
+						break;
+					case 31:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 150.0;
+						break;
+					case 32:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 55.0;
+						break;
+					case 33:
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 55.0;
+						break;
+					case 34: 
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw;
+						break;
+					case 35:  
+						animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw;
+						break;
+					case 36: 
+						animstate->m_flGoalFeetYaw += animstate->AbsYaw() + 60;
+						break;
+					case 37: 
+						animstate->m_flGoalFeetYaw += animstate->AbsYaw() - 60;
+						break;
+					case 38: 
+						animstate->m_flGoalFeetYaw += 30;
+						break;
+					case 39: 
+						animstate->m_flGoalFeetYaw -= 30;
+					}
+
+					animstate->m_flGoalFeetYaw = Math::NormalizeYaw(animstate->m_flEyeYaw);
+
+					animstate->m_flGoalFeetYaw = Math::NormalizeYaw(animstate->m_flGoalFeetYaw);
+						
+					
 				}
-			}
-		}
-	}
-
-	animstate->m_flGoalFeetYaw = Math::NormalizeYaw(animstate->m_flGoalFeetYaw);
-
-	float angles = GetAngle(player);
-	int new_side = 0;
-	{
-		bool forward = fabsf(Math::NormalizeYaw(GetAngle(player) - GetForwardYaw(player))) < 90.f;
-		if (csgo->missedshots[idx] == 1) {
-		}
-		else {
-			if (forward) {
-				switch (csgo->missedshots[idx] == 1) {
-
-				case 0:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 120.0;
-					break;
-				case 1:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 120.0;
-					break;
-				case 2:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 15.0;
-					break;
-				case 3:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 15.0;
-					break;
-				case 4:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 90.0;
-					break;
-				case 5:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 90.0;
-					break;
-				case 6:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 115.0;
-					break;
-				case 7:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 115.0;
-					break;
-				case 8:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 70.0;
-					break;
-				case 9:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 70.0;
-					break;
-				case 10:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 60.0;
-					break;
-				case 11:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 60.0;
-					break;
-				case 12:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 30.0;
-					break;
-				case 13:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 30.0;
-					break;
-				case 14:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 58.0;
-					break;
-				case 15:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 58.0;
-					break;
-				case 16:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 45.0;
-					break;
-				case 17:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 45.0;
-					break;
-				case 18:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 20.0;
-					break;
-				case 19:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 20.0;
-					break;
-				case 20:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 5.0;
-					break;
-				case 21:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 5.0;
-					break;
-				case 22:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 180.0;
-					break;
-				case 23:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 180.0;
-					break;
-				case 24:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 50.0;
-					break;
-				case 25:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 50.0;
-					break;
-				case 26:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 25.0;
-					break;
-				case 27:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 25.0;
-					break;
-				case 28:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 130.0;
-					break;
-				case 29:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 130.0;
-					break;
-				case 30:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 150.0;
-					break;
-				case 31:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 150.0;
-					break;
-				case 32:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw + 55.0;
-					break;
-				case 33:
-					animstate->m_flGoalFeetYaw = animstate->m_flGoalFeetYaw - 55.0;
-					break;
-				}
-
-				animstate->m_flGoalFeetYaw = Math::NormalizeYaw(animstate->m_flEyeYaw);
-
-				animstate->m_flGoalFeetYaw = Math::NormalizeYaw(animstate->m_flGoalFeetYaw);
 			}
 		}
 	}

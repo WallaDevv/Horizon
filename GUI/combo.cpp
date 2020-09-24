@@ -53,7 +53,7 @@ bool c_combo::update()
 		}
 		if (open_animation == 1.f) {
 			for (size_t i = 0; i < elements.size(); i++) {
-				pos.y += 20;
+				pos.y += 15;
 				h = g_mouse.x >= pos.x && g_mouse.y >= pos.y
 					&& g_mouse.x <= pos.x + size.x && g_mouse.y < pos.y + size.y;
 				if (h) {
