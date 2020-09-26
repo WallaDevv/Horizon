@@ -336,7 +336,7 @@ void CMAnimationFix::UpdatePlayers() {
             if (!_animation.frames[i].is_valid(0.45f, 0.2f))
                 _animation.frames.erase(_animation.frames.begin() + i);
 
-        //    resolver->Do(_animation.player);
+           resolver->Do(_animation.player);
 
             // have we already seen this update?
         if (player->GetSimulationTime() == player->GetOldSimulationTime())
