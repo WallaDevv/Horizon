@@ -77,7 +77,7 @@ void Legitbot::AutoPistol()
 {
 	if (!csgo->local || !csgo->cmd || !csgo->weapon)
 		return;
-	/*if (csgo->weapon->isPistol() && csgo->weapon->GetItemDefinitionIndex() != WEAPON_REVOLVER)
+	if (csgo->weapon->isPistol() && csgo->weapon->GetItemDefinitionIndex() != WEAPON_REVOLVER)
 	{
 	if (csgo->cmd->buttons & IN_ATTACK)
 	{
@@ -89,7 +89,7 @@ void Legitbot::AutoPistol()
 	csgo->cmd->buttons &= ~IN_ATTACK;
 	}
 	}
-	}*/
+	}
 	float flCurTime = (float)csgo->local->GetTickBase() * interfaces.global_vars->interval_per_tick;
 	if (csgo->weapon && csgo->weapon->isPistol() && csgo->weapon->NextPrimaryAttack() > flCurTime) {
 		if (csgo->weapon->GetItemDefinitionIndex() == weapon_revolver)

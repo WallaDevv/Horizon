@@ -89,6 +89,184 @@ int fix_item_def_knifes()
 }
 
 
+void c_menu::keybind_list()
+{
+	auto color = vars.misc.watermark_color;
+	int size = 0;
+
+	if (vars.ragebot.double_tap->active) {
+		size = size + 11;
+		switch (vars.ragebot.double_tap->type)
+		{
+		case 0:
+			break;
+		case 1:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[holding]");
+			break;
+		case 2:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[toggled]");
+			break;
+		case 3:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[release]");
+			break;
+		case 4:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[always]");
+			break;
+		}
+		g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "   doubletap");
+	}
+
+	if (vars.antiaim.inverter->active) {
+		size = size + 11;
+		switch (vars.antiaim.inverter->type)
+		{
+		case 0:
+			break;
+		case 1:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[holding]");
+			break;
+		case 2:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[toggled]");
+			break;
+		case 3:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[release]");
+			break;
+		case 4:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[always]");
+			break;
+		}
+		g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "   inverter");
+	}
+
+	if (vars.antiaim.fakeduck->active) {
+		size = size + 11;
+		switch (vars.antiaim.fakeduck->type)
+		{
+		case 0:
+			break;
+		case 1:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[holding]");
+			break;
+		case 2:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[toggled]");
+			break;
+		case 3:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[release]");
+			break;
+		case 4:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[always]");
+			break;
+		}
+		g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "   fakeduck");
+	}
+
+	if (vars.antiaim.slowwalk->active) {
+		size = size + 11;
+		switch (vars.antiaim.slowwalk->type)
+		{
+		case 0:
+			break;
+		case 1:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[holding]");
+			break;
+		case 2:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[toggled]");
+			break;
+		case 3:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[release]");
+			break;
+		case 4:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[always]");
+			break;
+		}
+		g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "   slowwalk");
+	}
+
+	if (vars.misc.thirdperson_bind->active) {
+		size = size + 11;
+		switch (vars.misc.thirdperson_bind->type)
+		{
+		case 0:
+			break;
+		case 1:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[holding]");
+			break;
+		case 2:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[toggled]");
+			break;
+		case 3:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[release]");
+			break;
+		case 4:
+			g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "								[Always]");
+			break;
+		}
+		g_Render->DrawString(vars.misc.keybind_list_x, vars.misc.keybind_list_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "   thirdperson");
+	}
+
+
+
+	g_Render->FilledRect(vars.misc.keybind_list_x, vars.misc.keybind_list_y, 150, 30 + size, color_t(15, 15, 15, 100));
+	g_Render->Rect(vars.misc.keybind_list_x, vars.misc.keybind_list_y, 150, 1, color);
+
+	g_Render->DrawString(vars.misc.keybind_list_x + 25, vars.misc.keybind_list_y + 5, color, render::outline, fonts::menu_main, "   Active Keybinds");
+}
+
+void c_menu::spec_list()
+{
+	auto color = vars.misc.watermark_color;
+	int size = 0;
+
+	for (int i = 1; i <= interfaces.global_vars->maxClients; i++)
+	{
+		auto pEntity = interfaces.ent_list->GetClientEntity(i);
+		player_info_t pinfo;
+
+		if (pEntity && pEntity != csgo->local)
+		{
+			if (interfaces.engine->GetPlayerInfo(i, &pinfo) && !pEntity->isAlive() && !pEntity->IsDormant())
+			{
+				HANDLE obs = pEntity->GetObserverTargetHandle();
+
+				if (obs)
+				{
+					auto pTarget = interfaces.ent_list->GetClientEntityFromHandle((uint32_t)obs);
+					player_info_t pinfo2;
+					if (pTarget)
+					{
+						if (interfaces.engine->GetPlayerInfo(pTarget->GetIndex(), &pinfo2))
+						{
+							if (pTarget->GetIndex() == csgo->local->GetIndex())
+							{
+								size = size + 15;
+								g_Render->DrawString(vars.misc.speclist_x + 10, vars.misc.speclist_y + 10 + size, color_t(255, 255, 255, 255), render::outline, fonts::menu_main, "   %s", pinfo.name);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	g_Render->FilledRect(vars.misc.speclist_x, vars.misc.speclist_y, 200, 30 + size, color_t(15, 15, 15, 100));
+	g_Render->Rect(vars.misc.speclist_x, vars.misc.speclist_y, 200, 1, color);
+
+	g_Render->DrawString(vars.misc.speclist_x + 10, vars.misc.speclist_y + 10, color, render::outline, fonts::menu_main, "   Spectator list");
+}
+
+void c_menu::monitor()
+{
+	auto color = vars.misc.watermark_color;
+
+	g_Render->FilledRect(vars.misc.monitor_x, vars.misc.monitor_y, 75, 22, color_t(15, 15, 15, 100));
+	g_Render->Rect(vars.misc.monitor_x, vars.misc.monitor_y, 75, 1, color);
+
+	g_Render->DrawString(vars.misc.monitor_x + 1, vars.misc.monitor_y + 1, color, render::outline, fonts::menu_main, "fake:\t%.1f", csgo->desync_angle);
+
+	g_Render->DrawString(vars.misc.monitor_x + 1, vars.misc.monitor_y + 11, color, render::outline, fonts::menu_main, "choke:\t%.1f", csgo->chockedticks);
+}
+
+
 
 BOOL SearchFiles(LPCTSTR lpszFileName, LPSEARCHFUNC lpSearchFunc, BOOL bInnerFolders = FALSE)
 {
@@ -238,6 +416,7 @@ void c_menu::watermark()
 	g_Render->DrawString(x - 86, 8, color_t(255, 255, 255, 130), render::outline, fonts::menu_main,   " | " __TIME__);
 }
 
+
 Vector2D get_mouse_pos()
 {
 	POINT mousePosition;
@@ -252,8 +431,6 @@ bool mouse_in_region(int x, int y, int x2, int y2)
 
 	return false;
 }
-
-
 void c_menu::render() {
 	
 
@@ -309,6 +486,7 @@ void c_menu::render() {
 	}
 
 
+
 	static bool once = false;
 	if (!once) {
 		Config.ResetToDefault();
@@ -320,6 +498,7 @@ void c_menu::render() {
 		if (window->get_transparency() < 100.f && vars.menu.open)
 			window->increase_transparency(animation_speed * 40.f);
 	}
+
 	else {
 
 		window = new c_window();
@@ -389,8 +568,6 @@ void c_menu::render() {
 						"Fake Pitch",
 					},
 					enable_antiaim));
-
-				antiaim_main->add_element(new c_checkbox("Freestanding", &vars.antiaim.freestanding));
 
 				antiaim_main->add_element(new c_keybind("Inverter", vars.antiaim.inverter,
 					[]() { return enable_antiaim(); }));
@@ -546,12 +723,6 @@ void c_menu::render() {
 				misc_esp_main->add_element(new c_checkbox("hitmarker sound",
 					&vars.visuals.hitmarker_sound, []() { return vars.visuals.hitmarker > 0; }));
 
-				misc_esp_main->add_element(new c_checkbox("spectator list",
-					&vars.visuals.speclist));
-
-				misc_esp_main->add_element(new c_checkbox("monitor",
-					&vars.visuals.monitor));
-
 				misc_esp_main->add_element(new c_colorpicker(&vars.visuals.eventlog_color,
 					color_t(255, 255, 255, 255), []() { return vars.visuals.eventlog; }));
 
@@ -560,12 +731,8 @@ void c_menu::render() {
 
 				misc_esp_main->add_element(new c_multicombo("indicator",
 					&vars.visuals.indicators, {
-						"fake",
-						"lag comp",
-						"fake duck",
-						"override dmg",
-						"force baim",
-						"double tap",
+						"Desync",
+						"lag comp",	
 						"manual antiaim"
 					}));
 
@@ -691,7 +858,7 @@ void c_menu::render() {
 				main_child->add_element(new c_checkbox("bunny hop",
 					&vars.misc.bunnyhop));
 
-				main_child->add_element(new c_checkbox("knife bot",
+				main_child->add_element(new c_checkbox("knife-bot",
 					&vars.misc.knifebot));
 
 				main_child->add_element(new c_checkbox("horizon clan-tag",
@@ -701,7 +868,7 @@ void c_menu::render() {
 					&vars.misc.hold_firinganims));
 
 				main_child->add_element(new c_colorpicker(&vars.misc.watermark_color, color_t(255, 255, 255, 255)));
-				main_child->add_element(new c_text("Menu Color"));
+				main_child->add_element(new c_text("Watermark Line Color"));
 
 				main_child->add_element(new c_text("viewmodel offset"));
 
@@ -742,20 +909,6 @@ void c_menu::render() {
 			}
 			window->add_element(main_child);
 
-			auto other_child = new c_child("misc", tab_t::misc, window);
-			other_child->set_size(Vector2D(250, 255));
-			other_child->set_position(Vector2D(0, 265)); {
-				other_child->add_element(new c_button("unload", []() { csgo->DoUnload = true; }));
-				other_child->add_element(new c_button("spoof sv cheats", []() {
-					ConVar* sv_cheats = interfaces.cvars->FindVar(hs::sv_cheats::s().c_str());
-					*(int*)((DWORD)&sv_cheats->m_fnChangeCallbacks + 0xC) = 0;
-					sv_cheats->SetValue(1);
-				}));
-				other_child->add_element(new c_button("unlock hidden cvars", EnableHiddenCVars));
-				other_child->initialize_elements();
-			}
-			window->add_element(other_child);
-
 			reinit_config();
 		}
 		// undefined tab
@@ -782,7 +935,7 @@ void c_menu::render() {
 
 	if (!vars.menu.open) {
 		if (window->get_transparency() > 0.f)
-			window->decrease_transparency(animation_speed * 65.f);
+			window->decrease_transparency(animation_speed * 35.f);
 	}
 	
 	ImGui::GetIO().MouseDrawCursor = window->get_transparency() > 0;

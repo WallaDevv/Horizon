@@ -12,7 +12,6 @@ int __fastcall Hooked_SendDatagram(void* netchan, void*, void *datagram)
 
 	const auto net_channel = reinterpret_cast<INetChannel*> (netchan);
 	const auto backup_seqnr = net_channel->iInSequenceNr;
-	g_Backtrack->DoPingSpike(net_channel);
 	const auto ret = H::SendDatagram(net_channel, datagram);
 	net_channel->iInSequenceNr = backup_seqnr;
 	return ret;

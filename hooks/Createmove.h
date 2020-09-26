@@ -64,7 +64,7 @@ void DoClantag()
 		{
 			if (flNextTimeUpdate <= flCurTime || flNextTimeUpdate - flCurTime > 1.f)
 			{
-				switch (int(interfaces.global_vars->curtime * 2.4) % 10) {
+				switch (int(interfaces.global_vars->curtime * 2.4) % 15) {
 				case 0: SetClanTag(hs::clantag1::s().c_str(), hs::weave_su::s().c_str()); break;
 				case 1: SetClanTag(hs::clantag2::s().c_str(), hs::weave_su::s().c_str()); break;
 				case 2: SetClanTag(hs::clantag3::s().c_str(), hs::weave_su::s().c_str()); break;
@@ -80,7 +80,6 @@ void DoClantag()
 				case 12: SetClanTag(hs::clantag13::s().c_str(), hs::weave_su::s().c_str()); break;
 				case 13: SetClanTag(hs::clantag14::s().c_str(), hs::weave_su::s().c_str()); break;
 				case 14: SetClanTag(hs::clantag15::s().c_str(), hs::weave_su::s().c_str()); break;
-				case 15: SetClanTag(hs::clantag15::s().c_str(), hs::weave_su::s().c_str()); break;
 				}
 			}
 			iLastTime = int(interfaces.global_vars->curtime * 2 + latency);
@@ -381,8 +380,8 @@ bool __fastcall Hooked_WriteUsercmdDeltaToBuffer(void* ecx, void*, int slot, bf_
 		return H::WriteUsercmdDeltaToBuffer(ecx, slot, buf, from, to, isnewcommand);
 
 	if (interfaces.engine->IsConnected() && interfaces.engine->IsInGame()) {
-		//if (csgo->game_rules->IsFreezeTime())
-		//	return H::WriteUsercmdDeltaToBuffer(ecx, slot, buf, from, to, isnewcommand);
+		if (csgo->game_rules->IsFreezeTime())
+			return H::WriteUsercmdDeltaToBuffer(ecx, slot, buf, from, to, isnewcommand);
 
 		if (csgo->m_nTickbaseShift <= 0 || csgo->client_state->iChokedCommands > 3)
 			return H::WriteUsercmdDeltaToBuffer(ecx, slot, buf, from, to, isnewcommand);
@@ -628,7 +627,7 @@ bool __stdcall Hooked_CreateMove(float a, CUserCmd* cmd) {
 					InitDoubleTap();
 				}
 
-				if (vars.ragebot.enable && vars.ragebot.double_tap->active/* && !csgo->game_rules->IsFreezeTime()*/)
+				if (vars.ragebot.enable && vars.ragebot.double_tap->active && !csgo->game_rules->IsFreezeTime())
 				{
 					if (!csgo->disable_dt)
 					{
@@ -910,7 +909,7 @@ void __stdcall hl_create_move(int sequence_number, float input_sample_frametime,
 					InitDoubleTap();
 				}
 
-				if (vars.ragebot.enable && vars.ragebot.double_tap->active /* && !csgo->game_rules->IsFreezeTime()*/)
+				if (vars.ragebot.enable && vars.ragebot.double_tap->active && !csgo->game_rules->IsFreezeTime())
 				{
 					if (!csgo->disable_dt)
 					{

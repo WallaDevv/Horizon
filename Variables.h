@@ -162,6 +162,7 @@ struct CGlobalVariables
 		int pitch;
 		int jitterrange;
 		bool freestanding;
+		bool breaklby;
 	} antiaim;
 	struct
 	{
@@ -330,6 +331,7 @@ struct CGlobalVariables
 
 		bool kill_effect;
 
+		bool keybind_list;
 		int anim_id;
 
 		bool blend_on_scope;
@@ -350,6 +352,12 @@ struct CGlobalVariables
 		int viewmodelfov = 68;
 		int viewmodel_x, viewmodel_y, viewmodel_z;
 		int worldfov = 90;
+		int keybind_list_x;
+		int keybind_list_y;
+		int speclist_x;
+		int speclist_y;
+		int monitor_x;
+		int monitor_y;
 
 		struct {
 			bool enable;

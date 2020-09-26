@@ -77,7 +77,7 @@ bool c_keybind::update()
 			return true;
 		}
 		for (size_t i = 0; i < binder.elements.size(); i++) {
-			pos.y += 20;
+			pos.y += 15;
 			h = g_mouse.x >= pos.x && g_mouse.y >= pos.y
 				&& g_mouse.x <= pos.x + size.x && g_mouse.y < pos.y + size.y;
 			if (h) {

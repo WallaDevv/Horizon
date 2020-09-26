@@ -69,7 +69,7 @@ private:
 	static constexpr auto points = 64;
 	static constexpr auto points_sphere_latitude = 16;
 	static constexpr auto points_sphere_longitude = 24;
-	static constexpr auto default_font = fnv1a("pro13");
+	static constexpr auto default_font = fnv1a("Arial");
 	inline static IDirect3DDevice9* dev;
 	inline static D3DVIEWPORT9 port;
 	inline static std::vector<Vector2D> lookup_table;

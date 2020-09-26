@@ -349,13 +349,13 @@ void CChams::Draw(void* ecx, void* results, const DrawModelInfo_t& info,
 					if (csgo->local->IsScoped())
 						interfaces.render_view->SetBlend(vars.visuals.blend_value / 100.f);
 				}
-				/*for (auto& i : csgo->realmatrix)
+				for (auto& i : csgo->realmatrix)
 				{
-					i[0][3] += info.origin.x;
-					i[1][3] += info.origin.y;
-					i[2][3] += info.origin.z;
-				}*/
-				if (csgo->fakematrix != nullptr /*&& !csgo->game_rules->IsFreezeTime()*/)
+					i[0][3] += model_origin.x;
+					i[1][3] += model_origin.y;
+					i[2][3] += model_origin.z;
+				}
+				if (csgo->fakematrix != nullptr && !csgo->game_rules->IsFreezeTime())
 				{
 					if (!vars.visuals.interpolated_dsy) {
 						for (auto& i : csgo->fakematrix)

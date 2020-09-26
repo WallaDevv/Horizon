@@ -218,7 +218,7 @@ void CVisuals::DrawLocalShit(IDirect3DDevice9* pDevice)
 			if (csgo->should_stop)
 			{
 				auto clr = percent_col(csgo->delta);
-				g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_green() - 65, 10),
+				g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
 					render::outline, fonts::lby_indicator, "STOP"
 				);
 				//g_Render->DrawString(fonts::lby_indicator, 10, dx - (50 + add), false, false, true, color_t(clr.a() - 126, clr.g() - 65, 10), "FAKE");
@@ -227,8 +227,8 @@ void CVisuals::DrawLocalShit(IDirect3DDevice9* pDevice)
 			if (vars.visuals.indicators & 1 && vars.antiaim.enable)
 			{
 				auto clr = percent_col(csgo->delta);
-				g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_green() - 65, 10),
-					render::outline, fonts::lby_indicator, "FAKE"
+				g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
+					render::outline, fonts::lby_indicator, "Desync"
 				);
 				//g_Render->DrawString(fonts::lby_indicator, 10, dx - (50 + add), false, false, true, color_t(clr.a() - 126, clr.g() - 65, 10), "FAKE");
 				add += 30;
@@ -238,8 +238,8 @@ void CVisuals::DrawLocalShit(IDirect3DDevice9* pDevice)
 				static color_t clr;
 				if (csgo->canDrawLC)
 				{
-					clr = csgo->canBreakLC ? color_t(129, 190, 10) : color_t(255, 0, 0);
-					g_Render->DrawString(10, dx - (50 + add), clr,
+					auto clr = percent_col(csgo->delta);
+					g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
 						render::outline, fonts::lby_indicator, "LC"
 					);
 					add += 30;
@@ -248,7 +248,8 @@ void CVisuals::DrawLocalShit(IDirect3DDevice9* pDevice)
 			if (vars.visuals.indicators & 8 && vars.antiaim.fakeduck->active)
 			{
 				//g_Render->DrawString(fonts::lby_indicator, 10, dx - (50 + add), false, false, true, color_t(129, 190, 10), "FD");
-				g_Render->DrawString(10, dx - (50 + add), color_t(129, 190, 10),
+				auto clr = percent_col(csgo->delta);
+				g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
 					render::outline, fonts::lby_indicator, "FD"
 				);
 				add += 30;
@@ -304,28 +305,32 @@ void CVisuals::DrawLocalShit(IDirect3DDevice9* pDevice)
 			if (vars.visuals.indicators & 8 && vars.ragebot.override_dmg->active) {
 
 				//g_Render->DrawString(fonts::lby_indicator, 10, dx - (50 + add), false, false, true, color_t(129, 190, 10), "DMG");
-				g_Render->DrawString(10, dx - (50 + add), color_t(129, 190, 10),
+				auto clr = percent_col(csgo->delta);
+				g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
 					render::outline, fonts::lby_indicator, "DMG"
 				);
 				add += 30;
 			}
 			if (vars.visuals.indicators & 16 && vars.ragebot.force_body->active) {
 				//g_Render->DrawString(fonts::lby_indicator, 10, dx - (50 + add), false, false, true, color_t(129, 190, 10), "BAIM");
-				g_Render->DrawString(10, dx - (50 + add), color_t(129, 190, 10),
+				auto clr = percent_col(csgo->delta);
+				g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
 					render::outline, fonts::lby_indicator, "BAIM"
 				);
 				add += 30;
 			}
 			if (vars.visuals.indicators & 32 && csgo->dt_charged) {
 				//g_Render->DrawString(fonts::lby_indicator, 10, dx - (50 + add), false, false, true, color_t(129, 190, 10), "DT");
-				if (CanDT() && !CMAntiAim::Get().did_shot) {
-					g_Render->DrawString(10, dx - (50 + add), color_t(129, 190, 10),
+				if (CanDT() && !CMAntiAim::Get().shot_dt) {
+					auto clr = percent_col(csgo->delta);
+					g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
 						render::outline, fonts::lby_indicator, "DT"
 					);
 					add += 30;
 				}
 				if (CanHS()) {
-					g_Render->DrawString(10, dx - (50 + add), color_t(129, 190, 10),
+					auto clr = percent_col(csgo->delta);
+					g_Render->DrawString(10, dx - (50 + add), color_t(clr.get_alpha() - 126, clr.get_blue() - 65, 10),
 						render::outline, fonts::lby_indicator, "HS"
 					);
 					add += 30;

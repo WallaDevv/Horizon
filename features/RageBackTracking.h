@@ -61,10 +61,9 @@ struct ResolverInfo
 
 class CMBacktracking
 {
-public:
-	//void UpdateIncomingSequences();
-	//void ClearIncomingSequences();
-	//void AddLatencyToNetchan(NetChannel * netchan, float Latency);
+	void UpdateIncomingSequences(INetChannel* netchan);
+	void ClearIncomingSequences();
+	void AddLatencyToNetchan(INetChannel* netchan, float Latency);
 	void DoPingSpike(INetChannel* net_channel);
 private:
 };

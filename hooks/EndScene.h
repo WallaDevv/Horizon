@@ -122,6 +122,7 @@ static HRESULT __stdcall Hooked_Present(IDirect3DDevice9* device, const RECT* sr
 			CGrenadePrediction::Get().Paint();
 		}
 
+
 	}
 	RestoreState(device);
 	return H::SteamPresent(device, src, dest, windowOverride, dirtyRegion);//return present here

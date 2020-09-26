@@ -8,7 +8,7 @@ void CKnifebot::Run()
 		if (!csgo->local || !csgo->weapon || csgo->weapon->InReload() || csgo->weapon->GetAmmo(false) == 0)
 			return false;
 
-		if (csgo->cmd->weaponselect || csgo->local->GetFlags() & FL_FROZEN /*|| csgo->game_rules->IsFreezeTime()*/)
+		if (csgo->cmd->weaponselect || csgo->local->GetFlags() & FL_FROZEN || csgo->game_rules->IsFreezeTime())
 			return false;
 
 		return (interfaces.global_vars->curtime >= weapon->NextPrimaryAttack()
@@ -20,7 +20,7 @@ void CKnifebot::Run()
 	if (!can_shoot())
 		return;
 	IBasePlayer* best_entity = nullptr;
-	float best_distance = 99999.f;
+	float best_distance = 100000.f;
 	for (auto i = 0; i <= interfaces.global_vars->maxClients; i++)
 	{
 		auto pEntity = interfaces.ent_list->GetClientEntity(i);

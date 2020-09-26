@@ -764,6 +764,7 @@ float IBaseCombatWeapon::GetPostponeFireReadyTime()
 	return *(float*)((uintptr_t)this + offset);
 }
 
+
 void IBaseCombatWeapon::SetPostPoneTime(float asdasdasd) {
 	static int offset = netvars.GetOffset(hs::DT_WeaponCSBase::s().c_str(), hs::m_flPostponeFireReadyTime::s().c_str());
 	*(float*)((uintptr_t)this + offset) = asdasdasd;

@@ -35,34 +35,34 @@ std::vector<int> Ragebot::GetHitboxesToScan(IBasePlayer* pEntity)
 		hitboxes.push_back((int)CSGOHitboxID::Pelvis);
 		return hitboxes;
 	}
-
-	if (GetCurrentPriorityHitbox(pEntity) == (int)CSGOHitboxID::Pelvis) // baim
 	{
-		if (settings.hitscan_baim & 1)
-			hitboxes.push_back((int)CSGOHitboxID::Chest);
-
-		if (settings.hitscan_baim & 2)
-			hitboxes.push_back((int)CSGOHitboxID::Stomach);
-
-		if (settings.hitscan_baim & 4)
-			hitboxes.push_back((int)CSGOHitboxID::Pelvis);
-
-		if (settings.hitscan_baim & 8)
-		{
-			hitboxes.push_back((int)CSGOHitboxID::LeftShin);
-			hitboxes.push_back((int)CSGOHitboxID::RightShin);
-		}
-		if (settings.hitscan_baim & 16) {
-			hitboxes.push_back((int)CSGOHitboxID::LeftFoot);
-			hitboxes.push_back((int)CSGOHitboxID::RightFoot);
-		}
-		return hitboxes;
+		hitboxes.push_back((int)CSGOHitboxID::Head);
+		hitboxes.push_back((int)CSGOHitboxID::Neck);
+		hitboxes.push_back((int)CSGOHitboxID::Stomach);
+		hitboxes.push_back((int)CSGOHitboxID::Pelvis);
+		hitboxes.push_back((int)CSGOHitboxID::UpperChest);
+		hitboxes.push_back((int)CSGOHitboxID::Chest);
+		hitboxes.push_back((int)CSGOHitboxID::LowerChest);
+		hitboxes.push_back((int)CSGOHitboxID::LeftUpperArm);
+		hitboxes.push_back((int)CSGOHitboxID::RightUpperArm);
+		hitboxes.push_back((int)CSGOHitboxID::LeftThigh);
+		hitboxes.push_back((int)CSGOHitboxID::RightThigh);
+		hitboxes.push_back((int)CSGOHitboxID::LeftHand);
+		hitboxes.push_back((int)CSGOHitboxID::RightHand);
+		hitboxes.push_back((int)CSGOHitboxID::LeftFoot);
+		hitboxes.push_back((int)CSGOHitboxID::RightFoot);
+		hitboxes.push_back((int)CSGOHitboxID::LeftShin);
+		hitboxes.push_back((int)CSGOHitboxID::RightShin);
+		hitboxes.push_back((int)CSGOHitboxID::LeftLowerArm);
+		hitboxes.push_back((int)CSGOHitboxID::RightLowerArm);
 	}
 
 	if (settings.hitscan & 1)
 		hitboxes.push_back((int)CSGOHitboxID::Head);
 	if (settings.hitscan & 2)
 		hitboxes.push_back((int)CSGOHitboxID::Neck);
+	if (settings.hitscan & 3)
+		hitboxes.push_back((int)CSGOHitboxID::Stomach);
 	if (settings.hitscan & 4) {
 		hitboxes.push_back((int)CSGOHitboxID::UpperChest);
 	}
@@ -95,6 +95,24 @@ std::vector<int> Ragebot::GetHitboxesToScan(IBasePlayer* pEntity)
 		hitboxes.push_back((int)CSGOHitboxID::RightFoot);
 	}
 
+	if (settings.hitscan_baim & 1)
+		hitboxes.push_back((int)CSGOHitboxID::Chest);
+
+	if (settings.hitscan_baim & 2)
+		hitboxes.push_back((int)CSGOHitboxID::Stomach);
+
+	if (settings.hitscan_baim & 4)
+		hitboxes.push_back((int)CSGOHitboxID::Pelvis);
+
+	if (settings.hitscan_baim & 8)
+	{
+		hitboxes.push_back((int)CSGOHitboxID::LeftShin);
+		hitboxes.push_back((int)CSGOHitboxID::RightShin);
+	}
+	if (settings.hitscan_baim & 16) {
+		hitboxes.push_back((int)CSGOHitboxID::LeftFoot);
+		hitboxes.push_back((int)CSGOHitboxID::RightFoot);
+	}
 	return hitboxes;
 }
 std::vector<Vector> Ragebot::GetMultipoints(IBasePlayer* pBaseEntity, int iHitbox, matrix BoneMatrix[128])
@@ -369,7 +387,7 @@ Vector Ragebot::FullScan(animation* anims, int& hitbox, float& simtime, float& b
 		(int)CSGOHitboxID::Stomach,
 		(int)CSGOHitboxID::Pelvis,
 	};
-	bool baim_if_lethal = CurrentSettings().baim & 4;
+	bool baim_if_lethal = CurrentSettings().baim & 3;
 	if (baim_if_lethal || CurrentSettings().adaptive_baim) {
 		for (auto HitboxID : baim_hitboxes) {
 			std::vector<Vector> Points = GetMultipoints(anims->player, HitboxID, BoneMatrix);
@@ -384,21 +402,17 @@ Vector Ragebot::FullScan(animation* anims, int& hitbox, float& simtime, float& b
 				}
 			}
 		}
-
-
-		if (baim_if_lethal && best_damage > health + 2) {
+		if (baim_if_lethal && best_damage > health + 5) {
 			target_lethal = true;
 			RestorePlayer(anims);
 			return best_point;
-			
 		}
-		if (best_damage > 0.2f && CurrentSettings().adaptive_baim) {
+		if (best_damage > 0 && CurrentSettings().adaptive_baim) {
 			if (CanDT() && csgo->dt_charged) {
-				if (best_damage * 0.f > health) {
+				if (best_damage * 2.f > health) {
 					target_lethal = true;
 					RestorePlayer(anims);
 					return best_point;
-
 				}
 			}
 			else {
@@ -410,7 +424,6 @@ Vector Ragebot::FullScan(animation* anims, int& hitbox, float& simtime, float& b
 
 		}
 	}
-
 	for (auto HitboxID : hitboxes)
 	{
 		std::vector<Vector> Points = GetMultipoints(anims->player, HitboxID, BoneMatrix);
@@ -691,7 +704,7 @@ bool HitTraces(animation* _animation, const Vector position, const float chance,
 }
 
 bool Ragebot::Hitchance(Vector Aimpoint, bool backtrack, animation* best, int& hitbox)
-{
+{                                                                                                            
 	bool r8 = csgo->weapon->GetItemDefinitionIndex() == weapon_revolver;
 	if (CurrentSettings().hitchancetype == 1 || r8)
 		return csgo->weapon->hitchance() > CurrentSettings().hitchance * (1.7 * (1.f - r8));
@@ -810,27 +823,65 @@ void Ragebot::DropTarget()
 	g_AutoWall.reset();
 }
 
-void AutoCockRevolver(IBasePlayer* local, CUserCmd* cmd)
+bool AutoCockRevolver()
 {
 	if (!vars.ragebot.enable)
-		return;
+		return false;
 
-	auto weapon = csgo->weapon;
-	if (weapon->get_item_definition_index() != WEAPON_REVOLVER)
-		return;
+	if (!csgo->local)
+		return false;
 
-	if (weapon->CanFire())
-		return;
+	static auto r8cock_flag = true;
+	static auto r8cock_time = 0.0f;
 
-	static int delay = 0;
-	delay--;
+	//Kyle
+	float REVOLVER_COCK_TIME = 0.2421875f;
+	const int count_needed = floor(REVOLVER_COCK_TIME / interfaces.global_vars->interval_per_tick);
+	static int cocks_done = 0;
 
-	if (delay <= 28)
-		cmd->buttons |= IN_ATTACK;
+	if (!csgo->weapon ||
+		csgo->weapon->GetItemDefinitionIndex() != WEAPON_REVOLVER ||
+		csgo->weapon->NextPrimaryAttack() > interfaces.global_vars->curtime)
+	{
+		if (csgo->weapon && csgo->weapon->GetItemDefinitionIndex() == WEAPON_REVOLVER)
+			csgo->cmd->buttons &= ~IN_ATTACK;
+		Ragebot::Get().shot = false;
+		csgo->weapon_struct.work = false;
+		return false;
+	}
+
+	csgo->weapon_struct.work = true;
+
+	if (cocks_done < count_needed)
+	{
+		csgo->cmd->buttons |= IN_ATTACK;
+		++cocks_done;
+		return false;
+	}
 	else
+	{
+		csgo->cmd->buttons &= ~IN_ATTACK;
+		cocks_done = 0;
+		return true;
+	}
 
+	csgo->cmd->buttons |= IN_ATTACK;
+	float curtime = csgo->local->GetTickBase() * interfaces.global_vars->interval_per_tick;
+	static float next_shoot_time = 0.f;
 
-		delay = 0;	
+	bool ret = false;
+
+	if (fabsf(next_shoot_time - curtime) < 0.5)
+		next_shoot_time = curtime + 0.2f - interfaces.global_vars->interval_per_tick; // -1 because we already cocked THIS tick ???
+
+	if (next_shoot_time - curtime - interfaces.global_vars->interval_per_tick <= 0.f)
+	{
+		next_shoot_time = curtime + 0.2f;
+		ret = true;
+		// should still go for one more tick but if we do, we're gonna shoot sooo idk how2do rn, its late
+		// the aimbot should decide whether to shoot or not yeh
+	}
+	return ret;
 }
 
 string HitboxToString(int id)
@@ -863,7 +914,7 @@ string ShotSnapshot::get_info() {
 	string ret;
 	ret += " [Hitchance:" + hitbox_where_shot + "] ";
 	if (vars.ragebot.resolver && resolver.size() > 0)
-		ret += " [Resolver:" + resolver + "] ";
+		ret += " [Resolver Type:" + resolver + "] ";
 	if (vars.ragebot.posadj) {
 		ret += " [Backtrack:" + std::to_string(backtrack) + "] ";
 		if (record->didshot)
@@ -876,28 +927,6 @@ AutostopInfo& get_autostop_info()
 	static AutostopInfo info{ -FLT_MAX, false };
 	return info;
 }
-
-//void Ragebot::FastStop() {
-//	Vector velocity = csgo->vecUnpredictedVel;
-//	float speed = velocity.Length2D();
-//
-//	if (speed <= 10.f) {
-//		csgo->stop_speed = 0.01f;
-//		csgo->should_stop_slide = true;
-//		return;
-//	}
-//
-//	Vector direction;
-//	Math::VectorAngles(velocity, direction);
-//	direction.y = csgo->original.y - direction.y;
-//	Vector forward;
-//	Math::AngleVectors(direction, forward);
-//	Vector negated_direction = forward * -speed;
-//	csgo->cmd->forwardmove = negated_direction.x;
-//	csgo->cmd->sidemove = negated_direction.y;
-//}
-
-
 
 void Ragebot::FastStop() {
 	auto wpn_info = csgo->weapon->GetCSWpnData();
@@ -928,6 +957,7 @@ void Ragebot::FastStop() {
 	Vector negated_direction = forward * -speed;
 	csgo->cmd->forwardmove = negated_direction.x;
 	csgo->cmd->sidemove = negated_direction.y;
+	//kyle new faststop
 }
 
 
@@ -967,7 +997,7 @@ int Ragebot::GetTicksToStop() {
 }
 bool Ragebot::HoldFiringAnimation() {
 	return (csgo->weapon && !IsAbleToShoot() &&
-		fabsf(csgo->weapon->LastShotTime() - ((float)csgo->local->GetTickBase() * interfaces.global_vars->interval_per_tick)) < 0.2f);
+		fabsf(csgo->weapon->LastShotTime() - ((float)csgo->local->GetTickBase() * interfaces.global_vars->interval_per_tick)) < 0.1f);
 }
 
 void Ragebot::DrawCapsule(animation* anims) {
@@ -999,10 +1029,13 @@ void Ragebot::DrawCapsule(animation* anims) {
 }
 void Ragebot::Run()
 {
+
+	//Kyle
 	auto weapon = csgo->weapon;
 
 	if (!weapon->IsGun())
 		return;
+
 
 	int curhitbox;
 	animation* best_anims = nullptr;
@@ -1019,7 +1052,9 @@ void Ragebot::Run()
 
 	bool in_air = !(csgo->local->GetFlags() & FL_ONGROUND);
 
-	bool is_able_to_shoot = IsAbleToShoot();
+	bool cock_revolver = AutoCockRevolver();
+
+	bool is_able_to_shoot = IsAbleToShoot() || (weapon->GetItemDefinitionIndex() == WEAPON_REVOLVER && cock_revolver);
 
 	for (auto i = 1; i <= interfaces.global_vars->maxClients; i++)
 	{
@@ -1030,6 +1065,7 @@ void Ragebot::Run()
 			continue;
 		if (!pEntity->isAlive()) {
 			csgo->missedshots[pEntity->GetIndex()] = 0;
+			csgo->missedshots[pEntity->GetIndex()] = 1;
 			continue;
 		}
 		if (pEntity->GetHealth() <= 0)
@@ -1102,7 +1138,7 @@ void Ragebot::Run()
 				}
 				else
 				{
-					csgo->stop_speed = 0.05f;
+					csgo->stop_speed = 0.06f;
 					csgo->should_stop_slide = true;
 				}
 			}

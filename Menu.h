@@ -24,6 +24,9 @@ public:
 	c_window* window = nullptr;
 	bool initialized = false;
 	void watermark();
+	void keybind_list();
+	void spec_list();
+	void monitor();
 	void render();
 	void update_binds();
 	bool should_reinit_weapon_cfg = false;

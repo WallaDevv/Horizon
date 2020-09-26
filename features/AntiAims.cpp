@@ -17,6 +17,42 @@ bool CanHS() {
 		false;
 }
 
+bool correct_lby_update()
+{
+
+	
+	static float next_lby_update = 0.f;
+
+	auto state = csgo->local->GetPlayerAnimState();
+
+	float curtime = interfaces.global_vars->curtime;
+
+	if (!state)
+		return false;
+
+	if (csgo->local->GetAbsVelocity().Length2D() > 0.1f || fabs(csgo->local->GetAbsVelocity().z) > 100.f)
+	{
+		next_lby_update = curtime + 0.22f;
+	}
+	if (next_lby_update < curtime)
+	{
+		next_lby_update = curtime + 1.1f;
+		return true;
+	}
+	return false;
+
+	csgo->should_sidemove = false;
+	if (!csgo->send_packet)
+	{
+		if (correct_lby_update())
+		{
+			csgo->cmd->viewangles.y += 120.0f;
+			csgo->cmd->viewangles.Normalize();
+		}
+	}
+}
+
+
 void CMAntiAim::Fakelag(bool& send_packet)
 {
 	if (!vars.antiaim.enable)
@@ -395,11 +431,8 @@ void CMAntiAim::Yaw(bool& send_packet)
 
 void CMAntiAim::Run(bool& send_packet)
 {
-
-	if (!vars.antiaim.freestanding) {
 		Freestanding();
-	}
-
+	    correct_lby_update();
 	if (vars.antiaim.slowwalk->active || csgo->should_stop_slide)
 	{
 		const auto weapon = csgo->weapon;
@@ -433,7 +466,7 @@ void CMAntiAim::Run(bool& send_packet)
 		shouldAA = false;
 		return;
 	}
-	if (/*csgo->game_rules->IsFreezeTime() ||*/ csgo->local->GetMoveType() == MOVETYPE_NOCLIP || csgo->local->GetMoveType() == MOVETYPE_LADDER)
+	if (csgo->game_rules->IsFreezeTime() || csgo->local->GetMoveType() == MOVETYPE_NOCLIP || csgo->local->GetMoveType() == MOVETYPE_LADDER)
 	{
 		shouldAA = false;
 		return;
