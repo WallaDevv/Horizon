@@ -86,8 +86,8 @@ void c_renderer::create_renderer(IDirect3DDevice9* _dev)
 	dev = _dev;
 	AddFontMemResourceEx(reinterpret_cast<void*>(prime_f), sizeof(prime_f), nullptr, &fnt);
 
-	fonts[fnv1a("prime12")] = c_font("Prime", 7, FW_REGULAR);
-	fonts[fnv1a("prime10")] = c_font("Prime", 8, FW_SEMIBOLD);
+	fonts[fnv1a("Russo One12")] = c_font("Russo One", 7, FW_REGULAR);
+	fonts[fnv1a("Russo One10")] = c_font("Russo One", 8, FW_SEMIBOLD);
 	init_device_objects(dev);
 }
 

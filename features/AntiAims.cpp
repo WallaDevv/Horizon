@@ -30,7 +30,7 @@ bool correct_lby_update()
 	if (!state)
 		return false;
 
-	if (csgo->local->GetAbsVelocity().Length2D() > 0.1f || fabs(csgo->local->GetAbsVelocity().z) > 100.f)
+	if (csgo->local->GetAbsVelocity().Length2D() > 0.1f || fabs(csgo->local->GetAbsVelocity().z) > 120.f)
 	{
 		next_lby_update = curtime + 0.22f;
 	}
@@ -46,7 +46,7 @@ bool correct_lby_update()
 	{
 		if (correct_lby_update())
 		{
-			csgo->cmd->viewangles.y += 120.0f;
+			csgo->cmd->viewangles.y += 180.0f;
 			csgo->cmd->viewangles.Normalize();
 		}
 	}
@@ -88,7 +88,7 @@ void CMAntiAim::Fakelag(bool& send_packet)
 	{
 		send_packet = exp ? csgo->client_state->iChokedCommands >= 1 : csgo->client_state->iChokedCommands >= 1;
 
-		csgo->max_fakelag_choke = 1/*exp ? 1 : vars.antiaim.break_lby ? 2 : 1*/;
+		csgo->max_fakelag_choke = 1; exp ? 1 : vars.antiaim.breaklby ? 2 : 10;
 		return;
 	}
 

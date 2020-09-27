@@ -41,7 +41,7 @@ public:
 			if (messages[i].time + showtime <= csgo->get_absolute_time())
 				messages[i].alpha -= 1;
 
-			c_renderer::text(Vector2D(15 - (255 - messages[i].alpha), 50 + (15 * i)), messages[i].str.c_str(), color_t(messages[i].clr.get_red(), messages[i].clr.get_green(), messages[i].clr.get_blue(), messages[i].alpha), fnv1a("prime12"));
+			c_renderer::text(Vector2D(15 - (255 - messages[i].alpha), 50 + (15 * i)), messages[i].str.c_str(), color_t(messages[i].clr.get_red(), messages[i].clr.get_green(), messages[i].clr.get_blue(), messages[i].alpha), fnv1a("Russo One12"));
 
 			if (messages[i].alpha <= 0)
 				messages.erase(messages.begin() + i);

@@ -20,14 +20,12 @@ void GUI_Init(IDirect3DDevice9* pDevice)
 		ImGuiIO& io = ImGui::GetIO();
 
 		ImFontConfig cfg;
-		//fonts::menu_main = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/tahomabd.ttf", 12, &cfg, io.Fonts->GetGlyphRangesCyrillic());
-		//fonts::menu_desc = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/tahoma.ttf", 13, &cfg, io.Fonts->GetGlyphRangesCyrillic());
-		fonts::menu_main = io.Fonts->AddFontFromMemoryTTF(prime_f, sizeof(prime_f), 12, &cfg, io.Fonts->GetGlyphRangesCyrillic());
-		fonts::menu_desc = io.Fonts->AddFontFromMemoryTTF(prime_f, sizeof(prime_f), 13, &cfg, io.Fonts->GetGlyphRangesCyrillic());
-		fonts::menu_fix = io.Fonts->AddFontFromMemoryTTF(prime_f, sizeof(prime_f), 10.7, &cfg, io.Fonts->GetGlyphRangesCyrillic());
-		fonts::very_small = io.Fonts->AddFontFromMemoryTTF(prime_f, sizeof(prime_f), 9, &cfg, io.Fonts->GetGlyphRangesCyrillic());
+		fonts::menu_main = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/Russoone-Regular.ttf", 12, &cfg, io.Fonts->GetGlyphRangesCyrillic());
+		fonts::menu_desc = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/Russoone-Regular.ttf", 13, &cfg, io.Fonts->GetGlyphRangesCyrillic());
+		fonts::menu_fix = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/Russoone-Regular.ttf", 10.7, &cfg, io.Fonts->GetGlyphRangesCyrillic());
+		fonts::very_small = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/Russoone-Regular.ttf", 9, &cfg, io.Fonts->GetGlyphRangesCyrillic());
 
-		fonts::lby_indicator = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/verdanab.ttf", 25, &cfg, io.Fonts->GetGlyphRangesCyrillic());
+		fonts::lby_indicator = io.Fonts->AddFontFromFileTTF("C:/windows/fonts/Russoone-Regular.ttf", 25, &cfg, io.Fonts->GetGlyphRangesCyrillic());
 
 		ImGuiFreeType::BuildFontAtlas(io.Fonts, 0x00/*ImGuiFreeType::RasterizerFlags::MonoHinting | ImGuiFreeType::RasterizerFlags::Monochrome*/);
 

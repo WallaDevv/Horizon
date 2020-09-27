@@ -259,6 +259,7 @@ bool CAutoWall::HandleBulletPenetration(CCSWeaponInfo* info, FireBulletData_t& d
 	surfacedata_t* enter_surface_data = interfaces.phys_props->GetSurfaceData(data.m_enter_trace.surface.surfaceProps);
 	int enter_material = enter_surface_data->game.material;
 
+
 	float enter_surf_penetration_modifier = enter_surface_data->game.flPenetrationModifier;
 	float final_damage_modifier = 0.18f;
 	float compined_penetration_modifier = 0.f;

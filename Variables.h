@@ -384,6 +384,7 @@ struct CGlobalVariables
 		bool enable;
 		int knife_model;
 		int knife_skin;
+		bool knife_model2;
 		int weapon_skin[30];
 		std::string icon;
 	}skins;

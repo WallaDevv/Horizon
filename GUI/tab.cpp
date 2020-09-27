@@ -24,7 +24,7 @@ void c_tab::draw(Vector2D pos, Vector2D size) {
 	auto clr2 = color_t(40 - animation * 10.f, 40 - animation * 10.f, 40 - animation * 10.f, alpha);
 	g_Render->FilledRect(pos.x, pos.y + 1, size.x, (size.y - 2) * animation, clr);
 	auto t_clr = c->get_active_tab_index() == this->index ? 
-		color_t(84 + 55.f * animation, 25.f - 25.f * animation, 200 + 50.f * animation, alpha) :
+		color_t(57 + 55.f * animation, 25.f - 25.f * animation, 200 + 50.f * animation, alpha) :
 		color_t(200 + 55.f * animation, 200 + 55.f * animation, 200 + 55.f * animation, alpha);
 	
 

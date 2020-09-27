@@ -295,7 +295,7 @@ BOOL SearchFiles(LPCTSTR lpszFileName, LPSEARCHFUNC lpSearchFunc, BOOL bInnerFol
 					char next[MAX_PATH];
 					if (GetFullPathName(lpszFileName, MAX_PATH, next, &part) == 0) return FALSE;
 					strcpy(part, wfd.cFileName);
-					strcat(next, "\\");
+					strcat(next, "\\Horizon\\*.json");
 					strcat(next, name);
 
 					SearchFiles(next, lpSearchFunc, TRUE);
@@ -332,7 +332,7 @@ void RefreshConfigs()
 	if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, path)))
 	{
 		ConfigList.clear();
-		string ConfigDir = std::string(path) + "\\Love\\*.json";
+		string ConfigDir = std::string(path) + "\\Horizon\\*.json";
 		SearchFiles(ConfigDir.c_str(), ReadConfigs, FALSE);
 	}
 
@@ -547,6 +547,9 @@ void c_menu::render() {
 				 
 				main_child->add_element(new c_checkbox("instant double tap",
 					&vars.ragebot.dt_instant, []() { return vars.ragebot.double_tap->key > 0; }));
+
+				main_child->add_element(new c_checkbox("disable double tap delay",
+					&vars.ragebot.disable_dt_delay, []() { return vars.ragebot.double_tap->key > 0; }));
 
 				main_child->initialize_elements();
 			}
@@ -868,7 +871,7 @@ void c_menu::render() {
 					&vars.misc.hold_firinganims));
 
 				main_child->add_element(new c_colorpicker(&vars.misc.watermark_color, color_t(255, 255, 255, 255)));
-				main_child->add_element(new c_text("Watermark Line Color"));
+				main_child->add_element(new c_text("watermark line color"));
 
 				main_child->add_element(new c_text("viewmodel offset"));
 
@@ -876,7 +879,7 @@ void c_menu::render() {
 																							  
 				main_child->add_element(new c_slider("", &vars.misc.viewmodel_y, -50.f, 50.f, "y: %.0f"));												  
 																							  
-				main_child->add_element(new c_slider("", &vars.misc.viewmodel_z, -50.f, 50.f, "z: %.0f"));
+				main_child->add_element(new c_slider("", &vars.misc.viewmodel_z, -50.f, 50.f, "z: %.0f"));		
 
 				main_child->add_element(new c_checkbox("buy bot",
 					&vars.misc.autobuy.enable));
@@ -913,13 +916,13 @@ void c_menu::render() {
 		}
 		// undefined tab
 		{
-			auto undef_child = new c_child("Welcome To Horizon" __DATE__, tab_t::undefined, window);
+			auto undef_child = new c_child("", tab_t::undefined, window);
 
 			undef_child->set_position(Vector2D(0, 0));
-			undef_child->set_size(Vector2D(508, 520));
+			undef_child->set_size(Vector2D(200, 200));
 
 			std::stringstream s;
-			s << "Hello user " << csgo->username << ", welcome \n";
+			s << "Hello user " << csgo->username;
 
 
 			undef_child->add_element(new c_text(s.str(), nullptr, color_t(255, 0, 0))); // add steam name

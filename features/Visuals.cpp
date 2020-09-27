@@ -483,7 +483,7 @@ void CVisuals::Draw()
 				int count = 0;
 				if (vars.visuals.name)
 				{
-					auto text_size = c_renderer::get_text_size(entity->GetName().c_str(), fnv1a("prime12"));
+					auto text_size = c_renderer::get_text_size(entity->GetName().c_str(), fnv1a("Russo One12"));
 					int r = vars.visuals.name_color[0],
 						g = vars.visuals.name_color[1],
 						b = vars.visuals.name_color[2],
@@ -491,7 +491,7 @@ void CVisuals::Draw()
 
 					auto clr = dormant ? color_t(255, 255, 255, alpha) : color_t(r, g, b, a);
 
-					c_renderer::text(Vector2D(box.x + box.w / 2 - text_size.x / 2, box.y - text_size.y / 2 - 10), entity->GetName().c_str(), clr, fnv1a("prime12"));
+					c_renderer::text(Vector2D(box.x + box.w / 2 - text_size.x / 2, box.y - text_size.y / 2 - 10), entity->GetName().c_str(), clr, fnv1a("Russo One12"));
 				}
 				if (!dormant) {
 					auto record = g_Animfix->get_latest_animation(entity);
@@ -562,7 +562,7 @@ void CVisuals::Draw()
 
 					sprintf_s(hps, "%i", hp);
 
-					auto text_size = c_renderer::get_text_size(entity->GetName().c_str(), fnv1a("prime12"));
+					auto text_size = c_renderer::get_text_size(entity->GetName().c_str(), fnv1a("Russo One12"));
 
 					auto clr = dormant ? color_t(200, 200, 200, alpha) : color_t(255, 255, 255, alpha);
 
@@ -603,7 +603,7 @@ void CVisuals::Draw()
 							char ammostr[10];
 							sprintf_s(ammostr, "%d", ammo);
 
-							const auto text_size = c_renderer::get_text_size(ammostr, fnv1a("prime10"));
+							const auto text_size = c_renderer::get_text_size(ammostr, fnv1a("Russo One10"));
 
 							c_renderer::rect(Vector2D(box.x, box.y + 2 + box.h), Vector2D(box.w + 1, 4), color_t(80, 80, 80, alpha * 0.49f));
 							c_renderer::rect_filled(Vector2D(box.x, box.y + 2 + box.h), Vector2D(box.w + 1, 4), color_t(10, 10, 10, (alpha * 0.8f)));
@@ -635,9 +635,9 @@ void CVisuals::Draw()
 						if (entity->GetWeapon()->GetItemDefinitionIndex() == 64)
 							strcpy_s(wpn_name, "REVOLVER");
 
-						auto wpn_name_size = c_renderer::get_text_size(wpn_name, fnv1a("prime10"));
+						auto wpn_name_size = c_renderer::get_text_size(wpn_name, fnv1a("Russo One10"));
 
-						c_renderer::text(Vector2D(box.x + box.w / 2 - wpn_name_size.x / 2, box.y + 1 + box.h + (count++ * 6.f)), wpn_name, clr, fnv1a("prime12"));
+						c_renderer::text(Vector2D(box.x + box.w / 2 - wpn_name_size.x / 2, box.y + 1 + box.h + (count++ * 6.f)), wpn_name, clr, fnv1a("Russo One12"));
 					}
 
 				}
@@ -649,27 +649,27 @@ void CVisuals::Draw()
 
 					if (vars.visuals.flags & 1 && entity->GetArmor() > 0) {
 						if (entity->HasHelmet())
-							c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "HK", clr, fnv1a("prime12"));
+							c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "HK", clr, fnv1a("Russo One12"));
 						else
-							c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "K", clr, fnv1a("prime12"));
+							c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "K", clr, fnv1a("Russo One12"));
 					}
 					if (vars.visuals.flags & 2 && entity->IsScoped()) {
-						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "Zoom", clr, fnv1a("prime12"));
+						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "Zoom", clr, fnv1a("Russo One12"));
 					}
 					if (vars.visuals.flags & 4 && entity->IsFlashed() > 0) {
-						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "Blind", clr, fnv1a("prime12"));
+						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "Blind", clr, fnv1a("Russo One12"));
 					}
 					if (vars.visuals.flags & 8 && csgo->hitchance) {
-						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "Hit", clr, fnv1a("prime12"));
+						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), "Hit", clr, fnv1a("Russo One12"));
 						csgo->hitchance = false;
 					}
 
 					if (vars.visuals.flags & 16 && vars.ragebot.resolver && ResolverMode[entity->EntIndex()] != "") {
-						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), ResolverMode[entity->EntIndex()].c_str(), clr, fnv1a("prime12"));
+						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), ResolverMode[entity->EntIndex()].c_str(), clr, fnv1a("Russo One12"));
 					}
 					if (vars.visuals.flags & 32 && vars.ragebot.resolver) {
 						auto str = "CHOKE: " + std::to_string(entity->GetChokedPackets());
-						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), str.c_str(), clr, fnv1a("prime12"));
+						c_renderer::text(Vector2D(box.x + box.w + 3, box.y + offset++ * 9), str.c_str(), clr, fnv1a("Russo One12"));
 
 					}
 

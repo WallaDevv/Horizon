@@ -315,8 +315,13 @@ void __fastcall Hooked_RunCommand(void* ecx, void* edx, IBasePlayer* player, CUs
 
 bool __fastcall Hooked_InPrediction(CPrediction* prediction, uint32_t)
 {
+
+
 	if (csgo->DoUnload)
 		return H::InPrediction(prediction);
+
+	if (csgo->UpdateMatrix)
+		return false;
 
 	static const auto return_to_maintain_sequence_transitions = csgo->Utils.FindPatternIDA(GetModuleHandleA(g_Modules[fnv::hash(hs::client_dll::s().c_str())].c_str()),
 		hs::seq_transition::s().c_str());

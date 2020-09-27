@@ -36,5 +36,5 @@ void c_dynamictext::render() {
 		return;
 	auto pos = c->get_cursor_position();
 	auto alpha = (int)(wnd->get_transparency() * 2.55f);
-	g_Render->DrawString(pos.x, pos.y, color_t(color[0], color[1], color[2], alpha), render::none, fonts::menu_desc, (*(string*)value).c_str());
+	g_Render->DrawString(pos.x, pos.y, color_t(color[1], color[0], color[0], alpha), render::none, fonts::menu_desc, (*(string*)value).c_str());
 }

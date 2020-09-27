@@ -30,14 +30,14 @@ void Drawing::CreateFonts()
 {
 	LastFontName = "";
 
-	LastFontName = "Verdana";
-	interfaces.surfaces->SetFontGlyphSet(fonts::esp_name = interfaces.surfaces->Create_Font(), "Verdana", 12, 400, 0, 0, FONTFLAG_OUTLINE);
+	LastFontName = "Russo One";
+	interfaces.surfaces->SetFontGlyphSet(fonts::esp_name = interfaces.surfaces->Create_Font(), "Russo One", 12, 400, 0, 0, FONTFLAG_OUTLINE);
 
-	LastFontName = "Small Fonts";
-	interfaces.surfaces->SetFontGlyphSet(fonts::esp_info = interfaces.surfaces->Create_Font(), "Small Fonts", 9, 400, 0, 0, FONTFLAG_OUTLINE);
+	LastFontName = "Russo One";
+	interfaces.surfaces->SetFontGlyphSet(fonts::esp_info = interfaces.surfaces->Create_Font(), "Russo One", 9, 400, 0, 0, FONTFLAG_OUTLINE);
 
-	LastFontName = "Verdana";
-	interfaces.surfaces->SetFontGlyphSet(fonts::esp_logs = interfaces.surfaces->Create_Font(), "Verdana", 12, 600, 0, 0, FONTFLAG_DROPSHADOW);
+	LastFontName = "Russo One";
+	interfaces.surfaces->SetFontGlyphSet(fonts::esp_logs = interfaces.surfaces->Create_Font(), "Russo One", 12, 600, 0, 0, FONTFLAG_DROPSHADOW);
 
 	LastFontName = "";
 }

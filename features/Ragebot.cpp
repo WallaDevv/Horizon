@@ -402,13 +402,13 @@ Vector Ragebot::FullScan(animation* anims, int& hitbox, float& simtime, float& b
 				}
 			}
 		}
-		if (baim_if_lethal && best_damage > health + 5) {
+		if (baim_if_lethal && best_damage > health + 1) {
 			target_lethal = true;
 			RestorePlayer(anims);
 			return best_point;
 		}
-		if (best_damage > 0 && CurrentSettings().adaptive_baim) {
-			if (CanDT() && csgo->dt_charged) {
+		if (best_damage > 2 && CurrentSettings().adaptive_baim) {
+			if (CanDT() && csgo->dt_charged && vars.antiaim.fakelag) {
 				if (best_damage * 2.f > health) {
 					target_lethal = true;
 					RestorePlayer(anims);
@@ -832,7 +832,7 @@ bool AutoCockRevolver()
 		return false;
 
 	static auto r8cock_flag = true;
-	static auto r8cock_time = 0.0f;
+	static auto r8cock_time = 2.0f;
 
 	//Kyle
 	float REVOLVER_COCK_TIME = 0.2421875f;

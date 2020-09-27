@@ -86,8 +86,8 @@ bool animation::is_valid(float range = .2f, float max_unlag = .2f)
     const auto correct = std::clamp(interfaces.engine->GetNetChannelInfo()->GetLatency(FLOW_INCOMING)
         + interfaces.engine->GetNetChannelInfo()->GetLatency(FLOW_OUTGOING)
         + calculate_lerp(), 0.f, max_unlag);
-    //if (CanDT() && csgo->dt_charged && !CMAntiAim::Get().did_shot && !vars.ragebot.disable_dt_delay)
-    //    range += TICKS_TO_TIME(8);
+    if (CanDT() && csgo->dt_charged && !CMAntiAim::Get().did_shot && !vars.ragebot.disable_dt_delay)
+        range += TICKS_TO_TIME(2);
     return fabsf(correct - (interfaces.global_vars->curtime - sim_time)) < range && correct < 1.f;
 }
 
@@ -180,7 +180,7 @@ void animation::build_server_bones(IBasePlayer* player)
     player->GetBoneArrayForWrite() = bones;
 
     csgo->UpdateMatrix = true;
-    player->SetupBones(nullptr, -1, 0x7FF00, interfaces.global_vars->curtime);
+    player->SetupBones(nullptr, -1, 0x7FF00, player->GetSimulationTime());
     csgo->UpdateMatrix = false;
 
     player->GetBoneArrayForWrite() = backup_bone_array;
@@ -336,7 +336,7 @@ void CMAnimationFix::UpdatePlayers() {
             if (!_animation.frames[i].is_valid(0.45f, 0.2f))
                 _animation.frames.erase(_animation.frames.begin() + i);
 
-           resolver->Do(_animation.player);
+           //resolver->Do(_animation.player);
 
             // have we already seen this update?
         if (player->GetSimulationTime() == player->GetOldSimulationTime())
@@ -458,8 +458,8 @@ bool animation::is_valid_extended()
 
     float deltaTime = fabsf(correct - (interfaces.global_vars->curtime - sim_time));
     float ping = 0.2f;
-    //if (CanDT() && csgo->dt_charged && !CMAntiAim::Get().did_shot)
-    //    ping += TICKS_TO_TIME(8);
+    if (CanDT() && csgo->dt_charged && vars.antiaim.fakelag &&  !CMAntiAim::Get().did_shot)
+       ping += TICKS_TO_TIME(2);
     return deltaTime < ping&& deltaTime >= ping - .2f;
 }
 
